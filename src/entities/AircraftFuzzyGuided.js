@@ -1,8 +1,8 @@
 import {Aircraft} from './Aircraft';
 import {AircraftGuided} from './AircraftGuided';
 import {Vector} from '../vector/Vector';
-import {clamp, toDegrees, toRadians} from '../utils';
-import {FuzzySetTRIMF, FuzzyVariable} from '../fuzzy/fuzzy';
+import {clamp} from '../utils';
+import {FuzzyVariable, FuzzySetTRIMF} from '../fuzzy/fuzzy';
 
 export class AircraftFuzzyGuided extends AircraftGuided {
     fuzzy = {
@@ -39,7 +39,7 @@ export class AircraftFuzzyGuided extends AircraftGuided {
         const omega = sightlineAngleVelocity;
         omega.addSet("LN", new FuzzySetTRIMF(-Math.PI, -0.5, -0.25));
         omega.addSet("N", new FuzzySetTRIMF(-0.3, -0.01, 0));
-        omega.addSet("Z", new FuzzySetTRIMF(-0.01, 0, 0.01));
+        omega.addSet("Z", new FuzzySetTRIMF(-0.05, 0, 0.05));
         omega.addSet("P", new FuzzySetTRIMF(0, 0.01, 0.3));
         omega.addSet("LP", new FuzzySetTRIMF(-0.25, 0.5, Math.PI));
 
