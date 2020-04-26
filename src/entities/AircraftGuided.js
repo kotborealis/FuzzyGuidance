@@ -50,22 +50,34 @@ export class AircraftGuided extends Aircraft {
         this.target = target;
     }
 
-    updateGuidance(delta) {
+    updateSightLines(){
         const {sightLines} = this;
-
         const sightLine = new SightLine(this.position, this.target.position);
-        const d = sightLine.distance();
-
-        if(sightLines.length > 0){
-            const sightLinePrev = sightLines[sightLines.length - 1];
-            const v = Math.abs(sightLinePrev.distance() - d);
-
-            const omega = (sightLine.angle() - sightLinePrev.angle());
-            const alpha = v * omega / d;
-
-            this.angleSpeed = 100*clamp(-Math.PI, Math.PI, alpha);
-        }
-
         this.sightLines = [...this.sightLines.slice(-100), sightLine];
+    }
+
+    getGuidanceVars(delta){
+        const {sightLines} = this;
+        if(sightLines.length > 1){
+            const sightLine = sightLines[sightLines.length - 1];
+            const d = sightLine.distance();
+
+            const sightLinePrev = sightLines[sightLines.length - 2];
+            const v = Math.abs(sightLinePrev.distance() - d) / delta;
+
+            const omega = (sightLine.angle() - sightLinePrev.angle())  / delta;
+
+            return {d, v, omega};
+        }
+    }
+
+    updateGuidance(delta) {
+        this.updateSightLines();
+        const guidanceVars = this.getGuidanceVars(delta);
+        if(!guidanceVars) return;
+
+        const {d, v, omega} = guidanceVars;
+        const alpha = v * omega / d / 1000;
+        this.angleSpeed = clamp(-Math.PI * 2, Math.PI * 2, alpha);
     }
 }
