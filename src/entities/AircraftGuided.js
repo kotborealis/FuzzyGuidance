@@ -1,5 +1,6 @@
 import {Aircraft} from './Aircraft';
 import {Vector} from '../vector/Vector';
+import {clamp} from '../utils';
 
 class SightLine {
     /** @type {Vector} **/
@@ -62,7 +63,7 @@ export class AircraftGuided extends Aircraft {
             const omega = (sightLine.angle() - sightLinePrev.angle());
             const alpha = v * omega / d;
 
-            this.angleSpeed = 100*alpha;
+            this.angleSpeed = 100*clamp(-Math.PI, Math.PI, alpha);
         }
 
         this.sightLines = [...this.sightLines.slice(-100), sightLine];

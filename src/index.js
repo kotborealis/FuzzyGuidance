@@ -7,7 +7,7 @@ const world = {};
 
 const generateWorld = (world) => {
     world.enemy = new Aircraft(Vector.random(0, 500, 0, 500), Math.random()*20+10, Math.random()*90-90);
-    world.uav = new AircraftGuided(Vector.random(0, 500, 0, 500), Math.random()*20+30, world.enemy);
+    world.uav = new AircraftGuided(world.enemy.position.sub(Vector.random(-200, 200, -200, 200)), Math.random()*20+30, world.enemy);
 }
 
 generateWorld(world);
