@@ -25,10 +25,11 @@ export class Aircraft {
      * @param {Number} speed
      * @param {Number} angle
      */
-    constructor(position = Vector.zero(), speed = 0, angle = 0) {
+    constructor(position = Vector.zero(), speed = 0, angle = 0, angleSpeed = 0) {
         this.position = position;
         this.speed = speed;
         this.angle = angle;
+        this.angleSpeed = angleSpeed;
     }
 
     /**

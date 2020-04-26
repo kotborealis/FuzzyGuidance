@@ -77,7 +77,7 @@ export class AircraftGuided extends Aircraft {
         if(!guidanceVars) return;
 
         const {d, v, omega} = guidanceVars;
-        const alpha = v * omega / d / 1000;
-        this.angleSpeed = clamp(-Math.PI * 2, Math.PI * 2, alpha);
+        const alpha = v * omega / d;
+        this.angleSpeed = clamp(-Math.PI * 2, Math.PI * 2, 1/delta * 100*alpha);
     }
 }

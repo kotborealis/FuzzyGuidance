@@ -2,16 +2,17 @@ import {svgGrid} from './svgGrid';
 import {renderAircraft, renderAircraftGuided} from './renderAircraft';
 import {Vector} from '../vector/Vector';
 
-const canvas = document.querySelector('canvas.guidance-view');
-window.canvas = canvas;
-
 const width = 500;
 const height = 500;
 
-canvas.width = width;
-canvas.height = height;
+export const renderGuidanceView = (selector, world) => {
+    const canvas = document.querySelector(selector);
+    canvas.width = width;
+    canvas.height = height;
+    renderGuidanceViewHelper(canvas, world);
+};
 
-export const renderGuidanceView = (world) => {
+const renderGuidanceViewHelper = (canvas, world) => {
     const {uav, enemy} = world;
 
     const ctx = canvas.getContext('2d');
@@ -30,5 +31,5 @@ export const renderGuidanceView = (world) => {
 
     ctx.restore();
 
-    requestAnimationFrame(() => renderGuidanceView(world));
+    requestAnimationFrame(() => renderGuidanceViewHelper(canvas, world));
 };

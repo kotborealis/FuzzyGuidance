@@ -87,6 +87,6 @@ export class AircraftFuzzyGuided extends AircraftGuided {
         this.fuzzy.omega.fuzzyfy(omega);
         const alpha = this.fuzzy.alpha.defuzzify();
 
-        this.angleSpeed = -clamp(-Math.PI * 2, Math.PI * 2, 1/delta * 1000*alpha);
+        this.angleSpeed = clamp(-Math.PI * 2, Math.PI * 2, -1/delta * 10*alpha);
     }
 }
