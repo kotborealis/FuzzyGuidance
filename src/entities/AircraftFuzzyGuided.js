@@ -83,15 +83,11 @@ export class AircraftFuzzyGuided extends AircraftGuided {
 
     updateGuidance(delta) {
         this.updateSightLines();
-        const guidanceVars = this.getGuidanceVars(delta);
-        if(!guidanceVars) return;
-
-        const {d, v, omega} = guidanceVars;
-        this.crisp = {d, v, omega};
+        const {d, v, omega} = this.getGuidanceVars(delta);
+        this.crisp = this.getGuidanceVars(delta);
         this.fuzzy.d.fuzzyfy(d);
         this.fuzzy.omega.fuzzyfy(omega);
         const alpha = this.fuzzy.alpha.defuzzify();
-
         this.angleSpeed = clamp(-Math.PI * 2, Math.PI * 2, -1/delta * 10*alpha);
     }
 }

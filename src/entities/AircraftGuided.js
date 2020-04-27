@@ -48,35 +48,31 @@ export class AircraftGuided extends Aircraft {
     constructor(position = Vector.zero(), speed = 0, target) {
         super(position, speed, 0);
         this.target = target;
+        this.updateSightLines();
+        this.updateSightLines();
     }
 
     updateSightLines(){
-        const {sightLines} = this;
         const sightLine = new SightLine(this.position, this.target.position);
         this.sightLines = [...this.sightLines.slice(-100), sightLine];
     }
 
     getGuidanceVars(delta){
         const {sightLines} = this;
-        if(sightLines.length > 1){
-            const sightLine = sightLines[sightLines.length - 1];
-            const d = sightLine.distance();
+        const sightLine = sightLines[sightLines.length - 1];
+        const d = sightLine.distance();
 
-            const sightLinePrev = sightLines[sightLines.length - 2];
-            const v = Math.abs(sightLinePrev.distance() - d) / delta;
+        const sightLinePrev = sightLines[sightLines.length - 2];
+        const v = Math.abs(sightLinePrev.distance() - d) / delta;
 
-            const omega = (sightLine.angle() - sightLinePrev.angle())  / delta;
+        const omega = (sightLine.angle() - sightLinePrev.angle())  / delta;
 
-            return {d, v, omega};
-        }
+        return {d, v, omega};
     }
 
     updateGuidance(delta) {
         this.updateSightLines();
-        const guidanceVars = this.getGuidanceVars(delta);
-        if(!guidanceVars) return;
-
-        const {d, v, omega} = guidanceVars;
+        const {d, v, omega} = this.getGuidanceVars(delta);
         const alpha = v * omega / d;
         this.angleSpeed = clamp(-Math.PI * 2, Math.PI * 2, 1/delta * 100*alpha);
     }
