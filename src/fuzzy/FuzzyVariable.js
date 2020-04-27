@@ -1,28 +1,16 @@
 export class FuzzyVariable {
-    /** @type {[]} **/
-    sets = [];
+    /** @type {Object.<*>} **/
+    set = {};
 
-
-    addSet(name, set) {
-        set.name = name;
-        this.sets.push(set);
-    }
-
-
-    set(name_) {
-        return this.sets.filter(({name}) => name === name_)[0];
-    }
-
-    ruleFor(name_) {
-        return this.sets.filter(({name}) => name === name_)[0].rule;
-    }
+    /** @type {Object.<*>} **/
+    rule = {};
 
     /**
      *
      * @param {Number} v
      */
     fuzzyfy(v) {
-        this.sets.forEach(fuzzySet => fuzzySet.calculateFuzzyValue(v));
+        Object.values(this.set).forEach(set => set.calculateFuzzyValue(v));
     }
 
     /**
@@ -30,22 +18,21 @@ export class FuzzyVariable {
      * @returns {Number}
      */
     defuzzify() {
-        this.fireRules();
+        Object.entries(this.set)
+            .forEach(([name, set]) => {
+                if(this.rule[name])
+                    set.fuzzyValue = this.rule[name].fire();
+            });
 
         let sumOfWeights = 0;
         let weighedSum = 0;
 
-        this.sets.forEach(fuzzySet => {
-            sumOfWeights += fuzzySet.getFuzzyArea() * fuzzySet.getCenter();
-            weighedSum += fuzzySet.getFuzzyArea();
-        });
+        Object.values(this.set)
+            .forEach(set => {
+                sumOfWeights += set.getFuzzyArea() * set.getCenter();
+                weighedSum += set.getFuzzyArea();
+            });
 
         return sumOfWeights === 0 ? 0 : weighedSum / sumOfWeights;
-    }
-
-    fireRules() {
-        this.sets.forEach(fuzzySet => {
-            fuzzySet.fuzzyValue = fuzzySet.rule.fire();
-        });
     }
 }

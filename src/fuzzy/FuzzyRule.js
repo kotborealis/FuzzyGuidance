@@ -1,16 +1,16 @@
 export class FuzzyRule {
     /** @type {Array[]} **/
-    list = [];
+    expressions = [];
 
     /**
      *
      * @param {FuzzySet[]} expr
      */
     add(...expr) {
-        this.list.push(expr);
+        this.expressions.push(expr);
     }
 
     fire() {
-        return Math.max(...this.list.map(expr => Math.min(...expr.map(set => set.fuzzyValue))));
+        return Math.max(...this.expressions.map(expr => Math.min(...expr.map(set => set.fuzzyValue))));
     }
 }

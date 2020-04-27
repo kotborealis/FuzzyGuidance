@@ -3,6 +3,7 @@ import {AircraftGuided} from './AircraftGuided';
 import {Vector} from '../vector/Vector';
 import {clamp} from '../utils';
 import {FuzzyVariable, FuzzySetTRIMF} from '../fuzzy/fuzzy';
+import {FuzzyRule} from '../fuzzy/FuzzyRule';
 
 export class AircraftFuzzyGuided extends AircraftGuided {
     fuzzy = {
@@ -24,52 +25,56 @@ export class AircraftFuzzyGuided extends AircraftGuided {
      * @param {Aircraft} target
      */
     constructor(position = Vector.zero(), speed = 0, target) {
-        super(position, speed, 0);
-        this.target = target;
+        super(position, speed, target);
 
         const distance = new FuzzyVariable();
         const sightlineAngleVelocity = new FuzzyVariable();
         const desiredAngleVelocity = new FuzzyVariable();
 
         const d = distance;
-        d.addSet("Z", new FuzzySetTRIMF(0, 25, 50));
-        d.addSet("S", new FuzzySetTRIMF(25, 250, 500));
-        d.addSet("L", new FuzzySetTRIMF(400, Number.MAX_SAFE_INTEGER - 1, Number.MAX_SAFE_INTEGER));
+        d.set.Z = new FuzzySetTRIMF(0, 25, 50);
+        d.set.S = new FuzzySetTRIMF(25, 250, 500);
+        d.set.L = new FuzzySetTRIMF(400, Number.MAX_SAFE_INTEGER - 1, Number.MAX_SAFE_INTEGER);
 
         const omega = sightlineAngleVelocity;
-        omega.addSet("LN", new FuzzySetTRIMF(-Math.PI, -0.5, -0.25));
-        omega.addSet("N", new FuzzySetTRIMF(-0.3, -0.01, 0));
-        omega.addSet("Z", new FuzzySetTRIMF(-0.05, 0, 0.05));
-        omega.addSet("P", new FuzzySetTRIMF(0, 0.01, 0.3));
-        omega.addSet("LP", new FuzzySetTRIMF(-0.25, 0.5, Math.PI));
+        omega.set.LN = new FuzzySetTRIMF(-Math.PI, -0.5, -0.25);
+        omega.set.N = new FuzzySetTRIMF(-0.3, -0.01, 0);
+        omega.set.Z = new FuzzySetTRIMF(-0.05, 0, 0.05);
+        omega.set.P = new FuzzySetTRIMF(0, 0.01, 0.3);
+        omega.set.LP = new FuzzySetTRIMF(-0.25, 0.5, Math.PI);
 
         const alpha = desiredAngleVelocity;
-        alpha.addSet("LN", new FuzzySetTRIMF(-Math.PI, -0.5, -0.25));
-        alpha.addSet("N", new FuzzySetTRIMF(-0.3, -0.01, 0));
-        alpha.addSet("Z", new FuzzySetTRIMF(-0.01, 0, 0.01));
-        alpha.addSet("P", new FuzzySetTRIMF(0, 0.01, 0.3));
-        alpha.addSet("LP", new FuzzySetTRIMF(-0.25, 0.5, Math.PI));
+        alpha.set.LN = new FuzzySetTRIMF(-Math.PI, -0.5, -0.25);
+        alpha.set.N = new FuzzySetTRIMF(-0.3, -0.01, 0);
+        alpha.set.Z = new FuzzySetTRIMF(-0.01, 0, 0.01);
+        alpha.set.P = new FuzzySetTRIMF(0, 0.01, 0.3);
+        alpha.set.LP = new FuzzySetTRIMF(-0.25, 0.5, Math.PI);
 
-        alpha.ruleFor("LN").add(d.set("S"), omega.set("P"));
-        alpha.ruleFor("LN").add(d.set("S"), omega.set("LP"));
-        alpha.ruleFor("LN").add(d.set("L"), omega.set("LP"));
+        alpha.rule.LN = new FuzzyRule;
+        alpha.rule.LN.add(d.set.S, omega.set.P);
+        alpha.rule.LN.add(d.set.S, omega.set.LP);
+        alpha.rule.LN.add(d.set.L, omega.set.LP);
 
-        alpha.ruleFor("N").add(d.set("L"), omega.set("P"));
+        alpha.rule.N = new FuzzyRule;
+        alpha.rule.N.add(d.set.L, omega.set.P);
 
-        alpha.ruleFor("Z").add(d.set("Z"), omega.set("LN"));
-        alpha.ruleFor("Z").add(d.set("Z"), omega.set("N"));
-        alpha.ruleFor("Z").add(d.set("Z"), omega.set("Z"));
-        alpha.ruleFor("Z").add(d.set("Z"), omega.set("P"));
-        alpha.ruleFor("Z").add(d.set("Z"), omega.set("LP"));
-        alpha.ruleFor("Z").add(d.set("Z"), omega.set("Z"));
-        alpha.ruleFor("Z").add(d.set("S"), omega.set("Z"));
-        alpha.ruleFor("Z").add(d.set("L"), omega.set("Z"));
+        alpha.rule.Z = new FuzzyRule;
+        alpha.rule.Z.add(d.set.Z, omega.set.LN);
+        alpha.rule.Z.add(d.set.Z, omega.set.N);
+        alpha.rule.Z.add(d.set.Z, omega.set.Z);
+        alpha.rule.Z.add(d.set.Z, omega.set.P);
+        alpha.rule.Z.add(d.set.Z, omega.set.LP);
+        alpha.rule.Z.add(d.set.Z, omega.set.Z);
+        alpha.rule.Z.add(d.set.S, omega.set.Z);
+        alpha.rule.Z.add(d.set.L, omega.set.Z);
 
-        alpha.ruleFor("P").add(d.set("L"), omega.set("N"));
+        alpha.rule.P = new FuzzyRule;
+        alpha.rule.P.add(d.set.L, omega.set.N);
 
-        alpha.ruleFor("LP").add(d.set("S"), omega.set("N"));
-        alpha.ruleFor("LP").add(d.set("S"), omega.set("LN"));
-        alpha.ruleFor("LP").add(d.set("L"), omega.set("LN"));
+        alpha.rule.LP = new FuzzyRule;
+        alpha.rule.LP.add(d.set.S, omega.set.N);
+        alpha.rule.LP.add(d.set.S, omega.set.LN);
+        alpha.rule.LP.add(d.set.L, omega.set.LN);
 
         this.fuzzy.alpha = alpha;
         this.fuzzy.omega = omega;

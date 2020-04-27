@@ -60,8 +60,8 @@ const updateGuidance = (world, delta) => {
     world.uav.updateGuidance(delta);
     setTimeout(() => updateGuidance(world, delta), delta * 1000);
 }
-updateGuidance(world, 1/60);
-updateGuidance(worldFuzzy, 1/60);
+updateGuidance(world, 1/50);
+updateGuidance(worldFuzzy, 1/50);
 
 renderGuidanceView('canvas.guidance-view', world);
 renderGuidanceView('canvas.fuzzy-guidance-view', worldFuzzy);

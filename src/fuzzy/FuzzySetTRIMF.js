@@ -1,5 +1,9 @@
 import {FuzzySet} from './FuzzySet';
 
+/**
+ * @inheritDoc
+ * @augments FuzzySet
+ */
 export class FuzzySetTRIMF extends FuzzySet {
     /** @type {Number} **/
     p1;
@@ -48,7 +52,6 @@ export class FuzzySetTRIMF extends FuzzySet {
 
     calculateFuzzyValue(x) {
         this.fuzzyValue = 0;
-        this.crispValue = x;
 
         const {p1, p2, p3} = this;
 

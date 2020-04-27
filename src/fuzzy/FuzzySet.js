@@ -1,18 +1,6 @@
-import {FuzzyRule} from './FuzzyRule';
-
 export class FuzzySet {
-    /** @type {String} **/
-    name = "unnamed";
-
-
     /** @type {Number} **/
     fuzzyValue = 0;
-
-    /** @type {Number} **/
-    crispValue = 0;
-
-    /** @type {FuzzyRule} **/
-    rule = new FuzzyRule();
 
     /**
      *
