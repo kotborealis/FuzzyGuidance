@@ -37,17 +37,17 @@ export class AircraftFuzzyGuided extends AircraftGuided {
         d.set.L = new FuzzySetTRIMF(400, Number.MAX_SAFE_INTEGER - 1, Number.MAX_SAFE_INTEGER);
 
         const omega = sightlineAngleVelocity;
-        omega.set.LN = new FuzzySetTRIMF(-Math.PI, -0.5, -0.25);
-        omega.set.N = new FuzzySetTRIMF(-0.3, -0.01, 0);
-        omega.set.Z = new FuzzySetTRIMF(-0.05, 0, 0.05);
-        omega.set.P = new FuzzySetTRIMF(0, 0.01, 0.3);
-        omega.set.LP = new FuzzySetTRIMF(-0.25, 0.5, Math.PI);
+        omega.set.LN = new FuzzySetTRIMF(-Math.PI*2, -0.5, -0.25);
+        omega.set.N = new FuzzySetTRIMF(-0.3, -0.1, 0);
+        omega.set.Z = new FuzzySetTRIMF(-0.5, 0, 0.5);
+        omega.set.P = new FuzzySetTRIMF(0, 0.1, 0.3);
+        omega.set.LP = new FuzzySetTRIMF(-0.25, 0.5, Math.PI*2);
 
         const alpha = desiredAngleVelocity;
         alpha.set.LN = new FuzzySetTRIMF(-Math.PI, -0.5, -0.25);
-        alpha.set.N = new FuzzySetTRIMF(-0.3, -0.01, 0);
-        alpha.set.Z = new FuzzySetTRIMF(-0.01, 0, 0.01);
-        alpha.set.P = new FuzzySetTRIMF(0, 0.01, 0.3);
+        alpha.set.N = new FuzzySetTRIMF(-0.3, -0.25, 0);
+        alpha.set.Z = new FuzzySetTRIMF(-0.25, 0, 0.25);
+        alpha.set.P = new FuzzySetTRIMF(0, 0.25, 0.3);
         alpha.set.LP = new FuzzySetTRIMF(-0.25, 0.5, Math.PI);
 
         alpha.rule.LN = new FuzzyRule;
