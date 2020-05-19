@@ -12,12 +12,6 @@ export class AircraftFuzzyGuided extends AircraftGuided {
         omega: null
     };
 
-    crisp = {
-        d: null,
-        v: null,
-        omega: null
-    }
-
     /**
      *
      * @param {Vector} position
@@ -33,30 +27,30 @@ export class AircraftFuzzyGuided extends AircraftGuided {
 
         const d = distance;
         d.set.Z = new FuzzySetTRIMF(0, 25, 50);
-        d.set.S = new FuzzySetTRIMF(25, 250, 500);
-        d.set.L = new FuzzySetTRIMF(400, Number.MAX_SAFE_INTEGER - 1, Number.MAX_SAFE_INTEGER);
+        d.set.S = new FuzzySetTRIMF(25, 250, 1000);
+        d.set.L = new FuzzySetTRIMF(950, 5000, 10000);
 
         const omega = sightlineAngleVelocity;
-        omega.set.LN = new FuzzySetTRIMF(-Math.PI*2, -0.5, -0.25);
-        omega.set.N = new FuzzySetTRIMF(-0.3, -0.1, 0);
-        omega.set.Z = new FuzzySetTRIMF(-0.5, 0, 0.5);
-        omega.set.P = new FuzzySetTRIMF(0, 0.1, 0.3);
-        omega.set.LP = new FuzzySetTRIMF(-0.25, 0.5, Math.PI*2);
+        omega.set.LN = new FuzzySetTRIMF(-Math.PI*2, -Math.PI, -Math.PI/2);
+        omega.set.N = new FuzzySetTRIMF(-Math.PI, -Math.PI/2, 0);
+        omega.set.Z = new FuzzySetTRIMF(-Math.PI/2, 0, Math.PI/2);
+        omega.set.P = new FuzzySetTRIMF(0, Math.PI/2, Math.PI);
+        omega.set.LP = new FuzzySetTRIMF(Math.PI/2, Math.PI, Math.PI*2);
 
         const alpha = desiredAngleVelocity;
-        alpha.set.LN = new FuzzySetTRIMF(-Math.PI, -0.5, -0.25);
-        alpha.set.N = new FuzzySetTRIMF(-0.3, -0.25, 0);
-        alpha.set.Z = new FuzzySetTRIMF(-0.25, 0, 0.25);
-        alpha.set.P = new FuzzySetTRIMF(0, 0.25, 0.3);
-        alpha.set.LP = new FuzzySetTRIMF(-0.25, 0.5, Math.PI);
+        alpha.set.LN = new FuzzySetTRIMF(-1, -0.5, -0.25);
+        alpha.set.N = new FuzzySetTRIMF(-0.35, -0.35, 0);
+        alpha.set.Z = new FuzzySetTRIMF(-0.35, 0, 0.35);
+        alpha.set.P = new FuzzySetTRIMF(0, 0.35, 0.4);
+        alpha.set.LP = new FuzzySetTRIMF(-0.25, 0.5, 1);
 
         alpha.rule.LN = new FuzzyRule;
-        alpha.rule.LN.add(d.set.S, omega.set.P);
-        alpha.rule.LN.add(d.set.S, omega.set.LP);
-        alpha.rule.LN.add(d.set.L, omega.set.LP);
+        alpha.rule.LN.add(d.set.S, omega.set.N);
+        alpha.rule.LN.add(d.set.S, omega.set.LN);
+        alpha.rule.LN.add(d.set.L, omega.set.LN);
 
         alpha.rule.N = new FuzzyRule;
-        alpha.rule.N.add(d.set.L, omega.set.P);
+        alpha.rule.N.add(d.set.L, omega.set.N);
 
         alpha.rule.Z = new FuzzyRule;
         alpha.rule.Z.add(d.set.Z, omega.set.LN);
@@ -69,12 +63,12 @@ export class AircraftFuzzyGuided extends AircraftGuided {
         alpha.rule.Z.add(d.set.L, omega.set.Z);
 
         alpha.rule.P = new FuzzyRule;
-        alpha.rule.P.add(d.set.L, omega.set.N);
+        alpha.rule.P.add(d.set.L, omega.set.P);
 
         alpha.rule.LP = new FuzzyRule;
-        alpha.rule.LP.add(d.set.S, omega.set.N);
-        alpha.rule.LP.add(d.set.S, omega.set.LN);
-        alpha.rule.LP.add(d.set.L, omega.set.LN);
+        alpha.rule.LP.add(d.set.S, omega.set.P);
+        alpha.rule.LP.add(d.set.S, omega.set.LP);
+        alpha.rule.LP.add(d.set.L, omega.set.LP);
 
         this.fuzzy.alpha = alpha;
         this.fuzzy.omega = omega;
@@ -84,10 +78,12 @@ export class AircraftFuzzyGuided extends AircraftGuided {
     updateGuidance(delta) {
         this.updateSightLines();
         const {d, v, omega} = this.getGuidanceVars(delta);
-        this.crisp = this.getGuidanceVars(delta);
         this.fuzzy.d.fuzzyfy(d);
         this.fuzzy.omega.fuzzyfy(omega);
-        const alpha = this.fuzzy.alpha.defuzzify();
-        this.angleSpeed = clamp(-Math.PI * 2, Math.PI * 2, -1/delta * 10*alpha);
+        const alpha = clamp(-Math.PI * 2, Math.PI * 2, this.fuzzy.alpha.defuzzify());
+        this.angleSpeed = alpha;
+        this.params = {d, v, omega, alpha};
+
+        this.angle_speed_history = [...this.angle_speed_history.slice(-this.angle_speed_limit), alpha];
     }
 }

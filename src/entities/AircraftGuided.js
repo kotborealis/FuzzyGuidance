@@ -33,11 +33,24 @@ class SightLine {
 }
 
 export class AircraftGuided extends Aircraft {
+    params = {
+        d: 0,
+        v: 0,
+        omega: 0,
+        alpha: 0,
+    }
+
     /** @type {Aircraft} **/
     target;
 
     /** @type {SightLine[]} **/
     sightLines = [];
+
+    /** @type {Number[]} **/
+    angle_speed_history = [];
+
+    /** @type {Number} **/
+    angle_speed_limit = 100;
 
     /**
      *
@@ -54,7 +67,7 @@ export class AircraftGuided extends Aircraft {
 
     updateSightLines(){
         const sightLine = new SightLine(this.position, this.target.position);
-        this.sightLines = [...this.sightLines.slice(-100), sightLine];
+        this.sightLines = [...this.sightLines.slice(-50), sightLine];
     }
 
     getGuidanceVars(delta){
@@ -73,7 +86,12 @@ export class AircraftGuided extends Aircraft {
     updateGuidance(delta) {
         this.updateSightLines();
         const {d, v, omega} = this.getGuidanceVars(delta);
-        const alpha = v * omega / d;
-        this.angleSpeed = clamp(-Math.PI * 2, Math.PI * 2, 1/delta * 100*alpha);
+        const alpha = clamp(-Math.PI * 2, Math.PI * 2, (v * omega) * 5);
+        this.angleSpeed = alpha;
+        this.params = {d, v, omega, alpha};
+
+        this.angle_speed_history = [...this.angle_speed_history.slice(-this.angle_speed_limit), alpha];
     }
 }
+
+//TODO: графики параметров от скорости

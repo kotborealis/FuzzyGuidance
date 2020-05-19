@@ -14,12 +14,12 @@ export class Universe {
     generate() {
         const {crisp, fuzzy} = this.worlds;
 
-        const enemy_pos = Vector.random(0, 500, 0, 500);
+        const enemy_pos = Vector.random(200, 300, 200, 300);
         const enemy_speed = Math.random() * 20 + 10;
         const enemy_angle = Math.random() * 200 - 100;
-        const enemy_angleSpeed = Math.random() * 2 - 1;
+        const enemy_angleSpeed = 0;
 
-        const uav_pos = Vector.random(0, 500, 0, 500);
+        const uav_pos = enemy_pos.add(Vector.random(-100, 100, -100, 100));
         const uav_speed = Math.random() * 20 + 30;
 
         crisp.enemy = new Aircraft(enemy_pos, enemy_speed, enemy_angle, enemy_angleSpeed);
