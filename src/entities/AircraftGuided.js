@@ -93,5 +93,3 @@ export class AircraftGuided extends Aircraft {
         this.angle_speed_history = [...this.angle_speed_history.slice(-this.angle_speed_limit), alpha];
     }
 }
-
-//TODO: графики параметров от скорости
