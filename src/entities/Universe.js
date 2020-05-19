@@ -11,6 +11,8 @@ export class Universe {
         crisp: new World
     };
 
+    reset = false;
+
     generate() {
         const {crisp, fuzzy} = this.worlds;
 
@@ -38,10 +40,14 @@ export class Universe {
         if(!fuzzy.simulation.endedAt)
             fuzzy.update(delta);
 
-        if(fuzzy.simulation.endedAt && crisp.simulation.endedAt){
-            this.generate();
-            fuzzy.resetSimulation();
-            crisp.resetSimulation();
+        if(fuzzy.simulation.endedAt && crisp.simulation.endedAt && !this.reset){
+            this.reset = true;
+            setTimeout(() => {
+                this.reset = false;
+                this.generate();
+                fuzzy.resetSimulation();
+                crisp.resetSimulation();
+            }, 1000);
         }
 
         setTimeout(() => this.updateSimulation(delta), delta * 1000);

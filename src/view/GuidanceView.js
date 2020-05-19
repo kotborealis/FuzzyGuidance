@@ -2,6 +2,8 @@ import {svgGrid} from './svgGrid';
 import {renderAircraft, renderAircraftGuided} from './renderAircraft';
 import {Vector} from '../vector/Vector';
 import {Chart} from './Chart';
+import {airplaneEnemy, airplaneFriend} from './airplaneGraphics';
+import {renderExplosion} from './renderExplosion';
 
 const width = 500;
 const height = 500;
@@ -53,9 +55,12 @@ const renderGuidanceViewHelper = (canvas, world) => {
 
     ctx.drawImage(svgGrid, 0, 0);
 
-    renderAircraftGuided(ctx, uav, "#2d2dfc");
+    renderAircraftGuided(ctx, uav, "#2d2dfc", airplaneFriend);
 
-    renderAircraft(ctx, enemy, "#b80c48");
+    renderAircraft(ctx, enemy, "#b80c48", airplaneEnemy);
+
+    if(world.simulation.endedAt)
+        renderExplosion(ctx, enemy);
 
     requestAnimationFrame(() => renderGuidanceViewHelper(canvas, world));
 };
