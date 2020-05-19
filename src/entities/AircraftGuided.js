@@ -78,7 +78,7 @@ export class AircraftGuided extends Aircraft {
         const sightLinePrev = sightLines[sightLines.length - 2];
         const v = Math.abs(sightLinePrev.distance() - d) / delta;
 
-        const omega = (sightLine.angle() - sightLinePrev.angle())  / delta;
+        const omega = (sightLine.angle() - sightLinePrev.angle()) / delta;
 
         return {d, v, omega};
     }
@@ -86,7 +86,7 @@ export class AircraftGuided extends Aircraft {
     updateGuidance(delta) {
         this.updateSightLines();
         const {d, v, omega} = this.getGuidanceVars(delta);
-        const alpha = clamp(-Math.PI * 2, Math.PI * 2, (v * omega) * 5);
+        const alpha = clamp(-Math.PI * 2, Math.PI * 2, (omega * d) / v);
         this.angleSpeed = alpha;
         this.params = {d, v, omega, alpha};
 

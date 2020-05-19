@@ -17,6 +17,7 @@ const svgGridImage = new Image();
 const svgGridBlob = new Blob([svgGridSource], {type: 'image/svg+xml;charset=utf-8'});
 const svgGridUrl = window.URL.createObjectURL(svgGridBlob);
 
+svgGridImage.onload = () => svgGrid.current = svgGridImage;
 svgGridImage.src = svgGridUrl;
 
-export const svgGrid = svgGridImage;
+export const svgGrid = {current: null};

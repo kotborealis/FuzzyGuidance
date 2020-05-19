@@ -14,14 +14,14 @@ export const Chart = (selector, color="#013d3d") => {
     const canvas = document.querySelector(selector);
 
     const k = 10;
-    console.log(canvas.height, k);
 
     let data;
 
     setInterval(() => {
         const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(svgGrid, 0, 0);
+        if(svgGrid.current)
+            ctx.drawImage(svgGrid.current, 0, 0);
         ctx.beginPath();
         ctx.moveTo(0, -data[0]*k+canvas.height/2);
         ctx.strokeStyle = color;

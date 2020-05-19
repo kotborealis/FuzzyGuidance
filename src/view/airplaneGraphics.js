@@ -1,7 +1,7 @@
-const svgSource = color => `
+const svgSourceAircraft = `
 <svg xmlns="http://www.w3.org/2000/svg"
  width="1280.000000pt" height="1135.000000pt" viewBox="0 0 1280.000000 1135.000000"
- preserveAspectRatio="xMidYMid meet" style="fill: ${color}">
+ preserveAspectRatio="xMidYMid meet" style="fill: #ad0037">
 <g transform="translate(0.000000,1135.000000) scale(0.100000,-0.100000)" >
 <path d="M6335 11334 c-46 -24 -64 -43 -116 -122 -143 -217 -280 -772 -334
 -1347 -25 -276 -35 -531 -42 -1130 l-7 -580 -146 -96 c-150 -100 -661 -451
@@ -45,8 +45,16 @@ l0 -241 -147 -98 c-415 -275 -674 -455 -725 -503 -103 -97 -124 -195 -115
 </svg>
 `;
 
+const svgSourceFighter = `
+<svg xmlns="http://www.w3.org/2000/svg" transform="rotate(-90)" viewBox="0 -256 1950 1950" style="fill: #4a4dff">
+  <g transform="matrix(1,0,0,-1,15.186441,1413.0508)" id="g3039">
+    <path xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" d="m 1632,800 q 261,-58 287,-93 l 1,-3 q -1,-32 -288,-96 L 1280,576 1056,512 H 992 L 699,160 h 69 q 26,0 45,-4.5 19,-4.5 19,-11.5 0,-7 -19,-11.5 Q 794,128 768,128 H 672 512 448 v 32 h 64 V 576 H 352 L 160,352 H 64 l -32,32 v 192 h 32 v 32 h 128 v 8 L 0,640 v 128 l 192,24 v 8 H 64 v 32 H 32 v 192 l 32,32 h 96 L 352,832 h 160 v 416 h -64 v 32 h 64 160 96 q 26,0 45,-4.5 19,-4.5 19,-11.5 0,-7 -19,-11.5 -19,-4.5 -45,-4.5 H 699 L 992,896 h 64 l 224,-64 z" id="path3041" inkscape:connector-curvature="0"/>
+  </g>
+</svg>
+`
+
 const airplaneEnemyImage = new Image();
-const airplaneEnemyBlob = new Blob([svgSource(`#ad0037`)], {type: 'image/svg+xml;charset=utf-8'});
+const airplaneEnemyBlob = new Blob([svgSourceAircraft], {type: 'image/svg+xml;charset=utf-8'});
 const airplaneEnemyUrl = window.URL.createObjectURL(airplaneEnemyBlob);
 
 airplaneEnemyImage.onload = () => airplaneEnemy.current = airplaneEnemyImage;
@@ -55,7 +63,7 @@ airplaneEnemyImage.src = airplaneEnemyUrl;
 export const airplaneEnemy = {current: null};
 
 const airplaneFriendImage = new Image();
-const airplaneFriendBlob = new Blob([svgSource(`#4a4dff`)], {type: 'image/svg+xml;charset=utf-8'});
+const airplaneFriendBlob = new Blob([svgSourceFighter], {type: 'image/svg+xml;charset=utf-8'});
 const airplaneFriendUrl = window.URL.createObjectURL(airplaneFriendBlob);
 
 airplaneFriendImage.onload = () => airplaneFriend.current = airplaneFriendImage;

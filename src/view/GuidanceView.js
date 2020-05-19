@@ -53,7 +53,8 @@ const renderGuidanceViewHelper = (canvas, world) => {
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.drawImage(svgGrid, 0, 0);
+    if(svgGrid.current)
+        ctx.drawImage(svgGrid.current, 0, 0);
 
     renderAircraftGuided(ctx, uav, "#2d2dfc", airplaneFriend);
 
