@@ -1,19 +1,28 @@
 import {svgGrid} from './svgGrid';
 import {renderAircraft, renderAircraftGuided} from './renderAircraft';
 import {Vector} from '../vector/Vector';
-import {Chart} from './Chart';
+import {ChartAngle} from './ChartAngle';
 import {airplaneEnemy, airplaneFriend} from './airplaneGraphics';
 import {renderExplosion} from './renderExplosion';
+import {Chart} from './Chart';
 
 const width = 500;
 const height = 500;
 
 export const renderGuidanceValues = (selector, world) => {
-    const chart_alpha = Chart(selector + ' table canvas.chart-value-alpha')
-    renderGuidanceValuesHelper(selector, world, chart_alpha);
+    const chartData = {
+        chart_alpha: ChartAngle(selector + ' table canvas.chart-value-alpha'),
+        chart_omega: ChartAngle(selector + ' table canvas.chart-value-omega'),
+        chart_d: Chart(selector + ' table canvas.chart-value-d'),
+        chart_v: Chart(selector + ' table canvas.chart-value-v'),
+        omega_history: [],
+        d_history: [],
+        v_history: []
+    }
+    renderGuidanceValuesHelper(selector, world, chartData);
 }
 
-const renderGuidanceValuesHelper = (selector, world, chart_alpha) => {
+const renderGuidanceValuesHelper = (selector, world, chartData) => {
     const table = document.querySelector(selector + '>table');
     if(world.uav){
         table.querySelector('.guidance-value-v-integer')
@@ -33,10 +42,19 @@ const renderGuidanceValuesHelper = (selector, world, chart_alpha) => {
         table.querySelector('.guidance-value-alpha-floating')
             .innerHTML = world.uav.params.alpha.toFixed(5).split('.')[1];
 
-        chart_alpha(world.uav.angle_speed_history);
+        chartData.chart_alpha(world.uav.angle_speed_history);
+
+        chartData.omega_history = [...chartData.omega_history.slice(-100), world.uav.params.omega];
+        chartData.chart_omega(chartData.omega_history);
+
+        chartData.d_history = [...chartData.d_history.slice(-100), world.uav.params.d];
+        chartData.chart_d(chartData.d_history);
+
+        chartData.v_history = [...chartData.v_history.slice(-100), world.uav.params.v];
+        chartData.chart_v(chartData.v_history);
     }
 
-    setTimeout(() => renderGuidanceValuesHelper(selector, world, chart_alpha), 1/120);
+    setTimeout(() => renderGuidanceValuesHelper(selector, world, chartData), 1000/60);
 };
 
 export const renderGuidanceView = (selector, world) => {

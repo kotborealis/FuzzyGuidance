@@ -1,38 +1,47 @@
 import {svgGrid} from './svgGrid';
-import {Vector} from '../vector/Vector';
 
 /**
  *
  * @param selector
  * @param color
- * @param min
- * @param max
  * @returns {function(...[*]=)}
  * @constructor
  */
-export const Chart = (selector, color="#013d3d") => {
+export const Chart = (selector, color = "#013d3d") => {
     const canvas = document.querySelector(selector);
 
-    const k = 10;
-
-    let data;
+    let data_y = [];
 
     setInterval(() => {
         const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        if(svgGrid.current)
+
+        if(svgGrid)
             ctx.drawImage(svgGrid.current, 0, 0);
+
         ctx.beginPath();
-        ctx.moveTo(0, -data[0]*k+canvas.height/2);
         ctx.strokeStyle = color;
         ctx.lineWidth = 2;
-        for(let i = 1; i < data.length; i++) {
-            ctx.lineTo(i * canvas.width / 100, -data[i]*k+canvas.height/2);
+        ctx.moveTo(...coordsToCanvas(canvas)([0, data_y.length], data_y, 0, data_y[0]));
+        for(let i = 1; i < data_y.length; i++){
+            ctx.lineTo(...coordsToCanvas(canvas)([0, data_y.length], data_y, i, data_y[i]));
         }
         ctx.stroke();
+
     }, 1/20);
 
-    return (_data) => {
-        data = _data;
+    return (_data_y) => {
+        data_y = _data_y;
     };
 };
+
+const coordsToCanvas = (canvas) => (data_x, data_y, x, y) => [
+    convertRange(x, bounds(data_x), [0, canvas.width]),
+    canvas.height - convertRange(y, bounds(data_y), [0, canvas.height]),
+];
+
+const bounds = data => [Math.min(...data), Math.max(...data)];
+
+function convertRange(value, r1, r2) {
+    return (value - r1[0]) * (r2[1] - r2[0]) / (r1[1] - r1[0]) + r2[0];
+}

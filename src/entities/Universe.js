@@ -21,7 +21,7 @@ export class Universe {
         const enemy_angle = Math.random() * 200 - 100;
         const enemy_angleSpeed = 0;
 
-        const uav_pos = enemy_pos.add(Vector.random(-100, 100, -100, 100));
+        const uav_pos = enemy_pos.add(Vector.random(-200, 200, 200, 200));
         const uav_speed = Math.random() * 20 + 30;
 
         crisp.enemy = new Aircraft(enemy_pos, enemy_speed, enemy_angle, enemy_angleSpeed);
