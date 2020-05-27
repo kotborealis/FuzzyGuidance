@@ -1,0 +1,152 @@
+<html>
+<head>
+    <title>Fuzzy Guidance</title>
+    <style>
+        body {
+            background: #f0f0f0;
+        }
+
+        .universe {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .guidance-view .guidance-values {
+            font-size: 2em;
+            font-family: monospace;
+        }
+
+        .guidance-value-integer {
+            text-align: right;
+        }
+
+        .guidance-value-label {
+            text-align: right;
+            padding-right: 1em;
+        }
+
+        .guidance-values, .guidance-values canvas {
+            width: 100%;
+        }
+
+        h2 {
+            font-size: 2em;
+            font-family: monospace;
+            text-transform: uppercase;
+        }
+
+        .chart {
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+<div class="universe">
+    <div class="guidance-view crisp-guidance-view">
+        <h2>Crisp guidance</h2>
+        <canvas class="world-view"></canvas>
+        <table class="guidance-values">
+            <tbody>
+            <tr>
+                <td class="guidance-value-label">Approach velocity (v)</td>
+                <td class="guidance-value-v-integer guidance-value-integer"></td>
+                <td class="guidance-value-dot">.</td>
+                <td class="guidance-value-v-floating"></td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <canvas class="chart-value-v chart"></canvas>
+                </td>
+            </tr>
+            <tr>
+                <td class="guidance-value-label">Distance (d)</td>
+                <td class="guidance-value-d-integer guidance-value-integer"></td>
+                <td class="guidance-value-dot">.</td>
+                <td class="guidance-value-d-floating"></td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <canvas class="chart-value-d chart"></canvas>
+                </td>
+            </tr>
+            <tr>
+                <td class="guidance-value-label">Sightline angle (&omega;)</td>
+                <td class="guidance-value-omega-integer guidance-value-integer"></td>
+                <td class="guidance-value-dot">.</td>
+                <td class="guidance-value-omega-floating"></td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <canvas class="chart-value-omega chart"></canvas>
+                </td>
+            </tr>
+            <tr>
+                <td class="guidance-value-label">Angular speed (&alpha;)</td>
+                <td class="guidance-value-alpha-integer guidance-value-integer"></td>
+                <td class="guidance-value-dot">.</td>
+                <td class="guidance-value-alpha-floating"></td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <canvas class="chart-value-alpha chart"></canvas>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="guidance-view fuzzy-guidance-view">
+        <h2>Fuzzy guidance</h2>
+        <canvas class="world-view"></canvas>
+        <table class="guidance-values">
+            <tbody>
+            <tr>
+                <td class="guidance-value-label">Approach velocity (v)</td>
+                <td class="guidance-value-v-integer guidance-value-integer"></td>
+                <td class="guidance-value-dot">.</td>
+                <td class="guidance-value-v-floating"></td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <canvas class="chart-value-v chart"></canvas>
+                </td>
+            </tr>
+            <tr>
+                <td class="guidance-value-label">Distance (d)</td>
+                <td class="guidance-value-d-integer guidance-value-integer"></td>
+                <td class="guidance-value-dot">.</td>
+                <td class="guidance-value-d-floating"></td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <canvas class="chart-value-d chart"></canvas>
+                </td>
+            </tr>
+            <tr>
+                <td class="guidance-value-label">Sightline angle (&omega;)</td>
+                <td class="guidance-value-omega-integer guidance-value-integer"></td>
+                <td class="guidance-value-dot">.</td>
+                <td class="guidance-value-omega-floating"></td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <canvas class="chart-value-omega chart"></canvas>
+                </td>
+            </tr>
+            <tr>
+                <td class="guidance-value-label">Angular speed (&alpha;)</td>
+                <td class="guidance-value-alpha-integer guidance-value-integer"></td>
+                <td class="guidance-value-dot">.</td>
+                <td class="guidance-value-alpha-floating"></td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <canvas class="chart-value-alpha chart"></canvas>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+<script src="./bundle.js"></script>
+</html>
