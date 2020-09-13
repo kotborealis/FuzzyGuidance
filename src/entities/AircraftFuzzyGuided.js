@@ -27,28 +27,28 @@ export class AircraftFuzzyGuided extends AircraftGuided {
         const desiredAngleVelocity = new FuzzyVariable();
 
         const v = approachVelocity;
-        v.set.Z = new FuzzySetTRIMF(0, 10, 15);
+        v.set.Z = new FuzzySetTRIMF(-Number.MAX_SAFE_INTEGER, 10, 15);
         v.set.S = new FuzzySetTRIMF(10, 15, 20);
-        v.set.L = new FuzzySetTRIMF(20, 30, Number.POSITIVE_INFINITY);
+        v.set.L = new FuzzySetTRIMF(20, 30, Number.MAX_SAFE_INTEGER);
 
         const d = distance;
         d.set.Z = new FuzzySetTRIMF(0, 25, 50);
         d.set.S = new FuzzySetTRIMF(25, 250, 1000);
-        d.set.L = new FuzzySetTRIMF(950, 5000, Number.POSITIVE_INFINITY);
+        d.set.L = new FuzzySetTRIMF(950, 5000, Number.MAX_SAFE_INTEGER);
 
         const omega = sightlineAngleVelocity;
-        omega.set.LN = new FuzzySetTRIMF(Number.NEGATIVE_INFINITY, -1.75*Math.PI, -0.1 * Math.PI);
+        omega.set.LN = new FuzzySetTRIMF(-Number.MAX_SAFE_INTEGER, -1.75*Math.PI, -0.1 * Math.PI);
         omega.set.N = new FuzzySetTRIMF(-1.75*Math.PI, -0.5 * Math.PI, 0);
         omega.set.Z = new FuzzySetTRIMF(-0.5*Math.PI, 0, 0.5*Math.PI);
         omega.set.P = new FuzzySetTRIMF(0, 0.5 * Math.PI, 1.75*Math.PI);
-        omega.set.LP = new FuzzySetTRIMF(0.1 * Math.PI, -1.75*Math.PI, Number.POSITIVE_INFINITY);
+        omega.set.LP = new FuzzySetTRIMF(0.1 * Math.PI, -1.75*Math.PI, Number.MAX_SAFE_INTEGER);
 
         const alpha = desiredAngleVelocity;
-        alpha.set.LN = new FuzzySetTRIMF(-Math.PI*2, -Math.PI, -0.9*Math.PI);
+        alpha.set.LN = new FuzzySetTRIMF(-Number.MAX_SAFE_INTEGER, -Math.PI, -0.9*Math.PI);
         alpha.set.N = new FuzzySetTRIMF(-Math.PI, -0.9*Math.PI, 0);
         alpha.set.Z = new FuzzySetTRIMF(-0.9*Math.PI, 0, 0.9*Math.PI);
         alpha.set.P = new FuzzySetTRIMF(0, 0.9*Math.PI, Math.PI);
-        alpha.set.LP = new FuzzySetTRIMF(0.9*Math.PI, Math.PI, Math.PI*2);
+        alpha.set.LP = new FuzzySetTRIMF(0.9*Math.PI, Math.PI, Number.MAX_SAFE_INTEGER);
 
         alpha.rule.LN = new FuzzyRule;
         alpha.rule.LN.add(d.set.S, omega.set.N);
