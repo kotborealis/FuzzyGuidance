@@ -42,15 +42,15 @@ export class Universe {
 
         if(fuzzy.simulation.endedAt && crisp.simulation.endedAt && !this.reset){
             this.reset = true;
-            setTimeout(() => {
-                this.reset = false;
-                this.generate();
-                fuzzy.resetSimulation();
-                crisp.resetSimulation();
-            }, 1000);
+            //setTimeout(() => {
+            //    this.reset = false;
+            //    this.generate();
+            //    fuzzy.resetSimulation();
+            //    crisp.resetSimulation();
+            //}, 1000);
         }
 
-        setTimeout(() => this.updateSimulation(delta), delta * 1000);
+        requestAnimationFrame(() => this.updateSimulation(delta));
     }
 
     updateGuidance(delta) {
@@ -61,6 +61,6 @@ export class Universe {
         if(!fuzzy.simulation.endedAt)
             this.worlds.fuzzy.uav.updateGuidance(delta);
 
-        setTimeout(() => this.updateGuidance(delta), delta * 1000);
+        requestAnimationFrame(() => this.updateGuidance(delta));
     }
 }

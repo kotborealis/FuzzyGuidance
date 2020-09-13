@@ -4,8 +4,8 @@ import {Universe} from './entities/Universe';
 const universe = new Universe();
 
 universe.generate();
-universe.updateSimulation(1/60);
-universe.updateGuidance(1/60);
+universe.updateSimulation(10/60);
+universe.updateGuidance(10/60);
 
 renderGuidanceView('.crisp-guidance-view', universe.worlds.crisp);
 renderGuidanceView('.fuzzy-guidance-view', universe.worlds.fuzzy);

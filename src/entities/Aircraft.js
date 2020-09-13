@@ -7,9 +7,6 @@ export class Aircraft {
     /** @type {Vector[]} **/
     trajectory = [];
 
-    /** @type{Number} **/
-    trajectory_limit = 500;
-
     /** @type {Number} **/
     speed;
 
@@ -49,7 +46,6 @@ export class Aircraft {
      */
     update(delta = 1) {
         this.trajectory.push(this.position);
-        this.trajectory = [...this.trajectory.slice(-this.trajectory_limit), this.position];
 
         this.angle += this.angleSpeed * delta;
         const velocity = this.getVelocity();
