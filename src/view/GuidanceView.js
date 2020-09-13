@@ -66,7 +66,7 @@ export const renderGuidanceView = (selector, world) => {
 };
 
 const renderGuidanceViewHelper = (canvas, world) => {
-    const {uav, enemy} = world;
+    const {uav, enemy, _uav_start, _enemy_start} = world;
 
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -77,6 +77,11 @@ const renderGuidanceViewHelper = (canvas, world) => {
     renderAircraftGuided(ctx, uav, "#2d2dfc", airplaneFriend);
 
     renderAircraft(ctx, enemy, "#b80c48", airplaneEnemy);
+
+    ctx.globalAlpha = 0.5;
+    renderAircraftGuided(ctx, _uav_start, "#2d2dfc", airplaneFriend);
+    renderAircraft(ctx, _enemy_start, "#b80c48", airplaneEnemy);
+    ctx.globalAlpha = 1;
 
     if(world.simulation.endedAt)
         renderExplosion(ctx, enemy);

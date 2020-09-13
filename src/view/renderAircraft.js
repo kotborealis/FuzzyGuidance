@@ -8,10 +8,9 @@
 import {Vector} from '../vector/Vector';
 
 export const renderAircraft = (ctx, aircraft, color = '#f0f0f0', texture) => {
-    aircraft.trajectory.forEach((position, i, {length}) => {
-        if(i % 2 === 0) return;
-        ctx.fillStyle = color + Math.floor(0xff * i/length).toString(16).padStart(2, '0');
-        ctx.lineWidth = 1;
+    ctx.fillStyle = color;
+    ctx.lineWidth = 1;
+    aircraft.trajectory.forEach((position) => {
         ctx.beginPath();
         ctx.arc(...position.coords(), 1, 0, 2 * Math.PI, false);
         ctx.fill();
@@ -23,7 +22,7 @@ export const renderAircraft = (ctx, aircraft, color = '#f0f0f0', texture) => {
     if(texture.current)
         ctx.drawImage(texture.current, -20, -20, 40, 40);
     ctx.restore();
-}
+};
 
 /**
  *
@@ -34,7 +33,7 @@ export const renderAircraft = (ctx, aircraft, color = '#f0f0f0', texture) => {
 export const renderAircraftGuided = (ctx, aircraft, color = '#f0f0f0', texture) => {
     aircraft.sightLines.forEach(({line, from, to}, i, {length}) => {
         ctx.lineWidth = 1;
-        ctx.strokeStyle= `rgba(168,215,102,${i/length})`;
+        ctx.strokeStyle= `rgba(168,215,102,${i/length+0.5})`;
         ctx.beginPath();
         ctx.moveTo(...from.coords());
         ctx.lineTo(...to.coords());

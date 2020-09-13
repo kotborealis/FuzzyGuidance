@@ -62,12 +62,11 @@ export class AircraftGuided extends Aircraft {
         super(position, speed, 0);
         this.target = target;
         this.updateSightLines();
-        this.updateSightLines();
     }
 
     updateSightLines(){
         const sightLine = new SightLine(this.position, this.target.position);
-        this.sightLines = [...this.sightLines.slice(-50), sightLine];
+        this.sightLines.push(sightLine);
     }
 
     getGuidanceVars(delta){
