@@ -4,39 +4,34 @@ import {FuzzySet} from './FuzzySet';
  * @inheritDoc
  * @augments FuzzySet
  */
-export class FuzzySetTRIMF extends FuzzySet {
+export class FuzzySetLIMFP extends FuzzySet {
     /** @type {Number} **/
     p1;
 
     /** @type {Number} **/
     p2;
 
-    /** @type {Number} **/
-    p3;
-
     /**
      *
      * @param {Number} p1
      * @param {Number} p2
-     * @param {Number} p3
      */
-    constructor(p1, p2, p3) {
+    constructor(p1, p2) {
         super();
         this.p1 = p1;
         this.p2 = p2;
-        this.p3 = p3;
     }
 
     getArea() {
-        const {p1, p2, p3} = this;
+        const {p1, p2} = this;
 
-        if(!(p3 > p2 && p2 > p1)) return 0;
+        if(p1 > p2) return 0;
 
         if(p1 < 0){
-            return (p3 + p1) / 2;
+            return (p2 + p1) / 2;
         }
         else{
-            return (p3 - p1) / 2;
+            return (p2 - p1) / 2;
         }
     }
 
@@ -51,16 +46,11 @@ export class FuzzySetTRIMF extends FuzzySet {
     calculateFuzzyValue(x) {
         this.fuzzyValue = 0;
 
-        const {p1, p2, p3} = this;
+        const {p1, p2} = this;
 
-        if(p3 > p2 && p2 > p1){
-            if(x > p1 && x <= p2){
-                this.fuzzyValue = (x - p1) / (p2 - p1);
-            }
-            else if(x > p2 && x < p3){
-                this.fuzzyValue = 1.0 - ((x - p2) / (p3 - p2));
-            }
-        }
+        if(x <= p1) this.fuzzyValue = 0;
+        else if(x >= p2) this.fuzzyValue = 1;
+        else this.fuzzyValue = (x - p1) / (p2 - p1);
 
         return this.fuzzyValue;
     }

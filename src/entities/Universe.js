@@ -19,7 +19,7 @@ export class Universe {
         const enemy_pos = Vector.random(200, 300, 200, 300);
         const enemy_speed = Math.random() * 20 + 10;
         const enemy_angle = Math.random() * 200 - 100;
-        const enemy_angleSpeed = 0;
+        const enemy_angleSpeed = 0.5;
 
         const uav_pos = enemy_pos.add(Vector.random(-200, 200, 200, 200));
         const uav_speed = Math.random() * 20 + 30;
