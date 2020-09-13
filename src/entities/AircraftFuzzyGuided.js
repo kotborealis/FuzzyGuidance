@@ -29,19 +29,19 @@ export class AircraftFuzzyGuided extends AircraftGuided {
         const v = approachVelocity;
         v.set.Z = new FuzzySetTRIMF(0, 10, 15);
         v.set.S = new FuzzySetTRIMF(10, 15, 20);
-        v.set.L = new FuzzySetTRIMF(20, 30, 1000);
+        v.set.L = new FuzzySetTRIMF(20, 30, Number.POSITIVE_INFINITY);
 
         const d = distance;
         d.set.Z = new FuzzySetTRIMF(0, 25, 50);
         d.set.S = new FuzzySetTRIMF(25, 250, 1000);
-        d.set.L = new FuzzySetTRIMF(950, 5000, 10000);
+        d.set.L = new FuzzySetTRIMF(950, 5000, Number.POSITIVE_INFINITY);
 
         const omega = sightlineAngleVelocity;
-        omega.set.LN = new FuzzySetTRIMF(-Math.PI*2, -1.75*Math.PI, -0.1 * Math.PI);
+        omega.set.LN = new FuzzySetTRIMF(Number.NEGATIVE_INFINITY, -1.75*Math.PI, -0.1 * Math.PI);
         omega.set.N = new FuzzySetTRIMF(-1.75*Math.PI, -0.5 * Math.PI, 0);
         omega.set.Z = new FuzzySetTRIMF(-0.5*Math.PI, 0, 0.5*Math.PI);
         omega.set.P = new FuzzySetTRIMF(0, 0.5 * Math.PI, 1.75*Math.PI);
-        omega.set.LP = new FuzzySetTRIMF(0.1 * Math.PI, -1.75*Math.PI, Math.PI*2);
+        omega.set.LP = new FuzzySetTRIMF(0.1 * Math.PI, -1.75*Math.PI, Number.POSITIVE_INFINITY);
 
         const alpha = desiredAngleVelocity;
         alpha.set.LN = new FuzzySetTRIMF(-Math.PI*2, -Math.PI, -0.9*Math.PI);
