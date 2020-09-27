@@ -40,17 +40,17 @@ export class AircraftGuided extends Aircraft {
         alpha: 0,
     }
 
+    trace = {
+        angle_speed: [],
+        approach_velocity: [],
+        distance: [],
+    }
+
     /** @type {Aircraft} **/
     target;
 
     /** @type {SightLine[]} **/
     sightLines = [];
-
-    /** @type {Number[]} **/
-    angle_speed_history = [];
-
-    /** @type {Number} **/
-    angle_speed_limit = 100;
 
     /**
      *
@@ -85,10 +85,12 @@ export class AircraftGuided extends Aircraft {
     updateGuidance(delta) {
         this.updateSightLines();
         const {d, v, omega} = this.getGuidanceVars(delta);
-        const alpha = clamp(-Math.PI * 2, Math.PI * 2, (omega * d) / v);
+        const alpha = (omega * d) / v;
         this.angleSpeed = isNaN(alpha) ? 0 : alpha;
         this.params = {d, v, omega, alpha};
 
-        this.angle_speed_history = [...this.angle_speed_history.slice(-this.angle_speed_limit), alpha];
+        this.trace.angle_speed.push(isNaN(alpha) ? 0 : alpha);
+        this.trace.approach_velocity.push(v);
+        this.trace.distance.push(d);
     }
 }

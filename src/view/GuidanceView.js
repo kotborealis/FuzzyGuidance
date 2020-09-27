@@ -42,16 +42,14 @@ const renderGuidanceValuesHelper = (selector, world, chartData) => {
         table.querySelector('.guidance-value-alpha-floating')
             .innerHTML = world.uav.params.alpha.toFixed(5).split('.')[1];
 
-        chartData.chart_alpha(world.uav.angle_speed_history);
+        chartData.chart_alpha(world.uav.trace.angle_speed);
 
         chartData.omega_history = [...chartData.omega_history.slice(-100), world.uav.params.omega];
         chartData.chart_omega(chartData.omega_history);
 
-        chartData.d_history = [...chartData.d_history.slice(-100), world.uav.params.d];
-        chartData.chart_d(chartData.d_history);
+        chartData.chart_d(world.uav.trace.distance);
 
-        chartData.v_history = [...chartData.v_history.slice(-100), world.uav.params.v];
-        chartData.chart_v(chartData.v_history);
+        chartData.chart_v(world.uav.trace.approach_velocity);
     }
 
     setTimeout(() => renderGuidanceValuesHelper(selector, world, chartData), 1000/60);
