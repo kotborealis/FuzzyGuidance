@@ -11,24 +11,17 @@ export class Universe {
         crisp: new World
     };
 
-    reset = false;
+    params = {};
+
 
     generate() {
-        const {crisp, fuzzy} = this.worlds;
+        this.params.enemy_pos = Vector.random(200, 300, 200, 300);
+        this.params.enemy_speed = Math.random() * 20 + 10;
+        this.params.enemy_angle = Math.random() * 200 - 100;
+        this.params.enemy_angleSpeed = 0.5;
 
-        const enemy_pos = Vector.random(200, 300, 200, 300);
-        const enemy_speed = Math.random() * 20 + 10;
-        const enemy_angle = Math.random() * 200 - 100;
-        const enemy_angleSpeed = 0.5;
-
-        const uav_pos = enemy_pos.add(Vector.random(-200, 200, 200, 200));
-        const uav_speed = Math.random() * 20 + 30;
-
-        crisp.enemy = new Aircraft(enemy_pos, enemy_speed, enemy_angle, enemy_angleSpeed);
-        fuzzy.enemy = new Aircraft(enemy_pos, enemy_speed, enemy_angle, enemy_angleSpeed);
-
-        crisp.uav = new AircraftGuided(uav_pos, uav_speed, crisp.enemy);
-        fuzzy.uav = new AircraftFuzzyGuided(uav_pos, uav_speed, fuzzy.enemy);
+        this.params.uav_pos = this.params.enemy_pos.add(Vector.random(-200, 200, 200, 200));
+        this.params.uav_speed = Math.random() * 20 + 30;
     }
 
     updateSimulation(delta = 1) {
@@ -40,17 +33,22 @@ export class Universe {
         if(!fuzzy.simulation.endedAt)
             fuzzy.update(delta);
 
-        if(fuzzy.simulation.endedAt && crisp.simulation.endedAt && !this.reset){
-            this.reset = true;
-            //setTimeout(() => {
-            //    this.reset = false;
-            //    this.generate();
-            //    fuzzy.resetSimulation();
-            //    crisp.resetSimulation();
-            //}, 1000);
-        }
-
         requestAnimationFrame(() => this.updateSimulation(delta));
+    }
+
+    reset() {
+        const {crisp, fuzzy} = this.worlds;
+
+        const {enemy_pos, enemy_speed, enemy_angle, enemy_angleSpeed, uav_pos, uav_speed} = this.params;
+
+        crisp.enemy = new Aircraft(enemy_pos, enemy_speed, enemy_angle, enemy_angleSpeed);
+        fuzzy.enemy = new Aircraft(enemy_pos, enemy_speed, enemy_angle, enemy_angleSpeed);
+
+        crisp.uav = new AircraftGuided(uav_pos, uav_speed, crisp.enemy);
+        fuzzy.uav = new AircraftFuzzyGuided(uav_pos, uav_speed, fuzzy.enemy);
+
+        fuzzy.resetSimulation();
+        crisp.resetSimulation();
     }
 
     updateGuidance(delta) {

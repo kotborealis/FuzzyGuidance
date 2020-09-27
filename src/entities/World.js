@@ -16,6 +16,8 @@ export class World {
     resetSimulation(){
         this.simulation.startedAt = Date.now();
         this.simulation.endedAt = null;
+        this._uav_start = null;
+        this._enemy_start = null;
     }
 
     update(delta = 1){

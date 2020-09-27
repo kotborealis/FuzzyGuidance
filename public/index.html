@@ -4,16 +4,17 @@
     <style>
         body {
             background: #f0f0f0;
+            font-size: 20px;
+            font-family: monospace;
+        }
+
+        h2 {
+            font-size: 3em;
         }
 
         .universe {
             display: flex;
             flex-direction: row;
-        }
-
-        .guidance-view .guidance-values {
-            font-size: 2em;
-            font-family: monospace;
         }
 
         .guidance-value-integer {
@@ -30,13 +31,11 @@
         }
 
         h2 {
-            font-size: 2em;
+            font-size: 30px;
             font-family: monospace;
             text-transform: uppercase;
-        }
-
-        .chart {
-            height: 50px;
+            padding: 0;
+            margin: 0;
         }
     </style>
 </head>
@@ -142,6 +141,51 @@
                 <td colspan="4">
                     <canvas class="chart-value-alpha chart"></canvas>
                 </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <h2>Model params</h2>
+        <h2>General</h2>
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                    <button class="btn-new-universe">Restart with new model params</button>
+                </td>
+                <td>
+                    <button class="btn-restart">Restart with current params</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <h2>Fuzzy</h2>
+        <table>
+            <tbody>
+            <tr>
+                <td colspan="4" class="guidance-value-label">Approach velocity (v)</td>
+            </tr>
+            <tr>
+                <td colspan="4"><canvas class="fuzzy-v"></canvas></td>
+            </tr>
+            <tr>
+                <td colspan="4" class="guidance-value-label">Distance (d)</td>
+            </tr>
+            <tr>
+                <td colspan="4"><canvas class="fuzzy-d"></canvas></td>
+            </tr>
+            <tr>
+                <td colspan="4" class="guidance-value-label">Sightline angle (&omega;)</td>
+            </tr>
+            <tr>
+                <td colspan="4"><canvas class="fuzzy-omega"></canvas></td>
+            </tr>
+            <tr>
+                <td colspan="4" class="guidance-value-label">Angular speed (&alpha;)</td>
+            </tr>
+            <tr>
+                <td colspan="4"><canvas class="fuzzy-alpha"></canvas></td>
             </tr>
             </tbody>
         </table>

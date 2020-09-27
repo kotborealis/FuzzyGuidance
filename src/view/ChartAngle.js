@@ -1,17 +1,19 @@
 import {svgGrid} from './svgGrid';
-import {Vector} from '../vector/Vector';
+
+const width = 500;
+const height = 50;
 
 /**
  *
  * @param selector
  * @param color
- * @param min
- * @param max
  * @returns {function(...[*]=)}
  * @constructor
  */
-export const ChartAngle = (selector, color="#4c0000") => {
+export const ChartAngle = (selector, color = "#4c0000") => {
     const canvas = document.querySelector(selector);
+    canvas.width = width;
+    canvas.height = height;
 
     const k = 12;
 

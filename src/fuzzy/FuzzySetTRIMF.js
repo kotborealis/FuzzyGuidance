@@ -1,19 +1,10 @@
-import {FuzzySet} from './FuzzySet';
+import {FuzzySet, FuzzySetBound} from './FuzzySet';
 
 /**
  * @inheritDoc
  * @augments FuzzySet
  */
 export class FuzzySetTRIMF extends FuzzySet {
-    /** @type {Number} **/
-    p1;
-
-    /** @type {Number} **/
-    p2;
-
-    /** @type {Number} **/
-    p3;
-
     /**
      *
      * @param {Number} p1
@@ -22,13 +13,11 @@ export class FuzzySetTRIMF extends FuzzySet {
      */
     constructor(p1, p2, p3) {
         super();
-        this.p1 = p1;
-        this.p2 = p2;
-        this.p3 = p3;
+        this.bounds = [new FuzzySetBound(p1, 0), new FuzzySetBound(p2, 1), new FuzzySetBound(p3, 0)];
     }
 
     getArea() {
-        const {p1, p2, p3} = this;
+        const [p1, p2, p3] = FuzzySetBound.toArrayX(this.bounds);
 
         if(!(p3 > p2 && p2 > p1)) return 0;
 
@@ -45,13 +34,13 @@ export class FuzzySetTRIMF extends FuzzySet {
     }
 
     getCenter() {
-        return this.p2;
+        return this.bounds[1].x;
     }
 
     calculateFuzzyValue(x) {
         this.fuzzyValue = 0;
 
-        const {p1, p2, p3} = this;
+        const [p1, p2, p3] = FuzzySetBound.toArrayX(this.bounds);
 
         if(p3 > p2 && p2 > p1){
             if(x > p1 && x <= p2){

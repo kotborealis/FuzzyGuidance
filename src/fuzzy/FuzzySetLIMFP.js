@@ -1,4 +1,4 @@
-import {FuzzySet} from './FuzzySet';
+import {FuzzySet, FuzzySetBound} from './FuzzySet';
 
 /**
  * @inheritDoc
@@ -18,12 +18,11 @@ export class FuzzySetLIMFP extends FuzzySet {
      */
     constructor(p1, p2) {
         super();
-        this.p1 = p1;
-        this.p2 = p2;
+        this.bounds = [new FuzzySetBound(p1, 0), new FuzzySetBound(p2, 1)];
     }
 
     getArea() {
-        const {p1, p2} = this;
+        const [p1, p2] = FuzzySetBound.toArrayX(this.bounds);
 
         if(p1 > p2) return 0;
 
@@ -40,13 +39,13 @@ export class FuzzySetLIMFP extends FuzzySet {
     }
 
     getCenter() {
-        return this.p2;
+        return this.bounds[1].x;
     }
 
     calculateFuzzyValue(x) {
         this.fuzzyValue = 0;
 
-        const {p1, p2} = this;
+        const [p1, p2] = FuzzySetBound.toArrayX(this.bounds);
 
         if(x <= p1) this.fuzzyValue = 0;
         else if(x >= p2) this.fuzzyValue = 1;

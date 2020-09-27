@@ -1,5 +1,8 @@
 import {svgGrid} from './svgGrid';
 
+const width = 500;
+const height = 50;
+
 /**
  *
  * @param selector
@@ -9,6 +12,8 @@ import {svgGrid} from './svgGrid';
  */
 export const Chart = (selector, color = "#013d3d") => {
     const canvas = document.querySelector(selector);
+    canvas.width = width;
+    canvas.height = height;
 
     let data_y = [];
 
