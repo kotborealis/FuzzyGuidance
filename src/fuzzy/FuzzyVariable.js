@@ -1,6 +1,6 @@
 export class FuzzyVariable {
     /** @type {Object.<*>} **/
-    set = {};
+    fset = {};
 
     /** @type {Object.<*>} **/
     rule = {};
@@ -10,7 +10,7 @@ export class FuzzyVariable {
      * @param {Number} v
      */
     fuzzyfy(v) {
-        Object.values(this.set).forEach(set => set.calculateFuzzyValue(v));
+        Object.values(this.fset).forEach(set => set.calculateFuzzyValue(v));
     }
 
     /**
@@ -18,7 +18,7 @@ export class FuzzyVariable {
      * @returns {Number}
      */
     defuzzify() {
-        Object.entries(this.set)
+        Object.entries(this.fset)
             .forEach(([name, set]) => {
                 if(this.rule[name])
                     set.fuzzyValue = this.rule[name].fire();
@@ -27,7 +27,7 @@ export class FuzzyVariable {
         let sumOfWeights = 0;
         let weighedSum = 0;
 
-        Object.values(this.set)
+        Object.values(this.fset)
             .forEach(set => {
                 sumOfWeights += set.getFuzzyArea() * set.getCenter();
                 weighedSum += set.getFuzzyArea();

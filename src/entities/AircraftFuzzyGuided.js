@@ -10,60 +10,60 @@ const sightlineAngleVelocity = new FuzzyVariable();
 const desiredAngleVelocity = new FuzzyVariable();
 
 const v = approachVelocity;
-v.set.Z = new FuzzySetLIMFN(0.1, 0.2);
-v.set.S = new FuzzySetTRIMF(0.1, 0.4, 0.7);
-v.set.L = new FuzzySetLIMFP(0.6, 0.9);
+v.fset.Z = new FuzzySetLIMFN(0.1, 0.2);
+v.fset.S = new FuzzySetTRIMF(0.1, 0.4, 0.7);
+v.fset.L = new FuzzySetLIMFP(0.6, 0.9);
 
 const d = distance;
-d.set.Z = new FuzzySetLIMFN(0.1, 0.2);
-d.set.S = new FuzzySetTRIMF(0.1, 0.4, 0.7);
-d.set.L = new FuzzySetLIMFP(0.6, 0.9);
+d.fset.Z = new FuzzySetLIMFN(0.1, 0.2);
+d.fset.S = new FuzzySetTRIMF(0.1, 0.4, 0.7);
+d.fset.L = new FuzzySetLIMFP(0.6, 0.9);
 
 const omega = sightlineAngleVelocity;
-omega.set.LN = new FuzzySetLIMFN(-2 * Math.PI, -0.1 * Math.PI);
-omega.set.N = new FuzzySetTRIMF(-1.75 * Math.PI, -0.5 * Math.PI, 0);
-omega.set.Z = new FuzzySetTRIMF(-0.5 * Math.PI, 0, 0.5 * Math.PI);
-omega.set.P = new FuzzySetTRIMF(0, 0.5 * Math.PI, 1.75 * Math.PI);
-omega.set.LP = new FuzzySetLIMFP(0.1 * Math.PI, 2 * Math.PI);
+omega.fset.LN = new FuzzySetLIMFN(-2 * Math.PI, -0.1 * Math.PI);
+omega.fset.N = new FuzzySetTRIMF(-1.75 * Math.PI, -0.5 * Math.PI, 0);
+omega.fset.Z = new FuzzySetTRIMF(-0.5 * Math.PI, 0, 0.5 * Math.PI);
+omega.fset.P = new FuzzySetTRIMF(0, 0.5 * Math.PI, 1.75 * Math.PI);
+omega.fset.LP = new FuzzySetLIMFP(0.1 * Math.PI, 2 * Math.PI);
 
 const alpha = desiredAngleVelocity;
-alpha.set.LN = new FuzzySetLIMFN(-2 * Math.PI, -0.9 * Math.PI);
-alpha.set.N = new FuzzySetTRIMF(-Math.PI, -0.9 * Math.PI, 0);
-alpha.set.Z = new FuzzySetTRIMF(-0.9 * Math.PI, 0, 0.9 * Math.PI);
-alpha.set.P = new FuzzySetTRIMF(0, 0.9 * Math.PI, Math.PI);
-alpha.set.LP = new FuzzySetLIMFP(0.9 * Math.PI, 2 * Math.PI);
+alpha.fset.LN = new FuzzySetLIMFN(-2 * Math.PI, -0.9 * Math.PI);
+alpha.fset.N = new FuzzySetTRIMF(-Math.PI, -0.9 * Math.PI, 0);
+alpha.fset.Z = new FuzzySetTRIMF(-0.9 * Math.PI, 0, 0.9 * Math.PI);
+alpha.fset.P = new FuzzySetTRIMF(0, 0.9 * Math.PI, Math.PI);
+alpha.fset.LP = new FuzzySetLIMFP(0.9 * Math.PI, 2 * Math.PI);
 
 alpha.rule.LN = new FuzzyRule;
-alpha.rule.LN.add(d.set.S, omega.set.N);
-alpha.rule.LN.add(d.set.S, omega.set.LN);
-alpha.rule.LN.add(d.set.L, omega.set.LN);
-alpha.rule.LN.add(omega.set.LP, v.set.L);
-alpha.rule.LN.add(omega.set.LP, v.set.S);
+alpha.rule.LN.add(d.fset.S, omega.fset.N);
+alpha.rule.LN.add(d.fset.S, omega.fset.LN);
+alpha.rule.LN.add(d.fset.L, omega.fset.LN);
+alpha.rule.LN.add(omega.fset.LP, v.fset.L);
+alpha.rule.LN.add(omega.fset.LP, v.fset.S);
 
 alpha.rule.N = new FuzzyRule;
-alpha.rule.N.add(d.set.L, omega.set.N);
-alpha.rule.N.add(omega.set.N, v.set.S);
+alpha.rule.N.add(d.fset.L, omega.fset.N);
+alpha.rule.N.add(omega.fset.N, v.fset.S);
 
 alpha.rule.Z = new FuzzyRule;
-alpha.rule.Z.add(d.set.Z, omega.set.LN);
-alpha.rule.Z.add(d.set.Z, omega.set.N);
-alpha.rule.Z.add(d.set.Z, omega.set.Z);
-alpha.rule.Z.add(d.set.Z, omega.set.P);
-alpha.rule.Z.add(d.set.Z, omega.set.LP);
-alpha.rule.Z.add(d.set.Z, omega.set.Z);
-alpha.rule.Z.add(d.set.S, omega.set.Z);
-alpha.rule.Z.add(d.set.L, omega.set.Z);
+alpha.rule.Z.add(d.fset.Z, omega.fset.LN);
+alpha.rule.Z.add(d.fset.Z, omega.fset.N);
+alpha.rule.Z.add(d.fset.Z, omega.fset.Z);
+alpha.rule.Z.add(d.fset.Z, omega.fset.P);
+alpha.rule.Z.add(d.fset.Z, omega.fset.LP);
+alpha.rule.Z.add(d.fset.Z, omega.fset.Z);
+alpha.rule.Z.add(d.fset.S, omega.fset.Z);
+alpha.rule.Z.add(d.fset.L, omega.fset.Z);
 
 alpha.rule.P = new FuzzyRule;
-alpha.rule.P.add(d.set.L, omega.set.P);
-alpha.rule.P.add(omega.set.P, v.set.S);
+alpha.rule.P.add(d.fset.L, omega.fset.P);
+alpha.rule.P.add(omega.fset.P, v.fset.S);
 
 alpha.rule.LP = new FuzzyRule;
-alpha.rule.LP.add(d.set.S, omega.set.P);
-alpha.rule.LP.add(d.set.S, omega.set.LP);
-alpha.rule.LP.add(d.set.L, omega.set.LP);
-alpha.rule.LP.add(omega.set.LP, v.set.L);
-alpha.rule.LP.add(omega.set.LP, v.set.S);
+alpha.rule.LP.add(d.fset.S, omega.fset.P);
+alpha.rule.LP.add(d.fset.S, omega.fset.LP);
+alpha.rule.LP.add(d.fset.L, omega.fset.LP);
+alpha.rule.LP.add(omega.fset.LP, v.fset.L);
+alpha.rule.LP.add(omega.fset.LP, v.fset.S);
 
 export class AircraftFuzzyGuided extends AircraftGuided {
     fuzzy = {

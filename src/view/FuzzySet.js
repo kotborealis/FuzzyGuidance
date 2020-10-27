@@ -26,7 +26,7 @@ export const renderFuzzySet = (selector, fuzzyVar, boundsX = [0, 1]) => {
         if(svgGrid)
             ctx.drawImage(svgGrid.current, 0, 0);
 
-        Object.entries(fuzzyVar.set).map(([name, set], index) => {
+        Object.entries(fuzzyVar.fset).map(([name, set], index) => {
             ctx.strokeStyle = colors[index % colors.length];
             ctx.fillStyle = colors[index % colors.length];
             ctx.lineWidth = 2;
@@ -46,7 +46,7 @@ export const renderFuzzySet = (selector, fuzzyVar, boundsX = [0, 1]) => {
             ctx.stroke();
         });
 
-        Object.entries(fuzzyVar.set).map(([name, set], index) => {
+        Object.entries(fuzzyVar.fset).map(([name, set], index) => {
             ctx.strokeStyle = colors[index % colors.length];
             ctx.fillStyle = colors[index % colors.length];
             ctx.lineWidth = 2;
@@ -72,7 +72,7 @@ export const renderFuzzySet = (selector, fuzzyVar, boundsX = [0, 1]) => {
 
         const min = {value: null, distance: 9999};
 
-        Object.entries(fuzzyVar.set).map(([name, set], index) =>
+        Object.entries(fuzzyVar.fset).map(([name, set], index) =>
             set.bounds.map(bound => {
                 const d = (new Vector(...toCanvas(bound.x, bound.y))).distance(mousePos);
                 if(d <= min.distance){
