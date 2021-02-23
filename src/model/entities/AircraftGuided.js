@@ -1,6 +1,5 @@
 import {Aircraft} from './Aircraft';
 import {Vector} from '../vector/Vector';
-import {clamp} from '../utils';
 
 class SightLine {
     /** @type {Vector} **/
@@ -41,9 +40,10 @@ export class AircraftGuided extends Aircraft {
     }
 
     trace = {
-        angle_speed: [],
-        approach_velocity: [],
-        distance: [],
+        angle_speed: [], // alpha
+        approach_velocity: [], // v
+        distance: [], // d,
+        sightline_angle: [] // omega
     }
 
     /** @type {Aircraft} **/
@@ -76,7 +76,6 @@ export class AircraftGuided extends Aircraft {
 
         const sightLinePrev = sightLines[sightLines.length - 2];
         const v = Math.abs(sightLinePrev.distance() - d) / delta;
-
         const omega = (sightLine.angle() - sightLinePrev.angle()) / delta;
 
         return {d, v, omega};
@@ -85,12 +84,13 @@ export class AircraftGuided extends Aircraft {
     updateGuidance(delta) {
         this.updateSightLines();
         const {d, v, omega} = this.getGuidanceVars(delta);
-        const alpha = (omega * d) / v;
-        this.angleSpeed = isNaN(alpha) ? 0 : alpha;
+        const alpha = v ? ((omega * d) / v) : 0;
+        this.angleSpeed = alpha;
         this.params = {d, v, omega, alpha};
 
-        this.trace.angle_speed.push(isNaN(alpha) ? 0 : alpha);
+        this.trace.angle_speed.push(alpha);
         this.trace.approach_velocity.push(v);
         this.trace.distance.push(d);
+        this.trace.sightline_angle.push(omega);
     }
 }

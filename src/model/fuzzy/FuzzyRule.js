@@ -4,7 +4,7 @@ export class FuzzyRule {
 
     /**
      *
-     * @param {FuzzySet[]} expr
+     * @param expr
      */
     add(...expr) {
         this.expressions.push(expr);

@@ -14,7 +14,7 @@
 
         .universe {
             display: flex;
-            flex-direction: row;
+            flex-direction: column-reverse;
         }
 
         .guidance-value-integer {
@@ -37,10 +37,16 @@
             padding: 0;
             margin: 0;
         }
+
+        .model-viewport {
+            display: flex;
+            flex-direction: row;
+        }
     </style>
 </head>
 <body>
 <div class="universe">
+    <div class="model-viewport">
     <div class="guidance-view crisp-guidance-view">
         <h2>Crisp guidance</h2>
         <canvas class="world-view"></canvas>
@@ -145,7 +151,8 @@
             </tbody>
         </table>
     </div>
-    <div>
+    </div>
+    <div class="model-params">
         <h2>Model params</h2>
         <h2>General</h2>
         <table>

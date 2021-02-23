@@ -5,7 +5,6 @@
  * @param {String} color
  * @param texture
  */
-import {Vector} from '../vector/Vector';
 
 export const renderAircraft = (ctx, aircraft, color = '#f0f0f0', texture) => {
     ctx.fillStyle = color;

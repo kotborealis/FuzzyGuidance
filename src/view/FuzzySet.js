@@ -1,8 +1,8 @@
 import {svgGrid} from './svgGrid';
 
-import {FuzzySetBound, FuzzySetLIMFN} from '../fuzzy/fuzzy';
-import {Vector} from '../vector/Vector';
-import {FuzzySetLIMFP} from '../fuzzy/FuzzySetLIMFP';
+import {FuzzySetBound, FuzzySetLIMFN} from '../model/fuzzy/fuzzy';
+import {Vector} from '../model/vector/Vector';
+import {FuzzySetLIMFP} from '../model/fuzzy/FuzzySetLIMFP';
 
 const width = 500;
 const height = 100;

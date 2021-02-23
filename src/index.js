@@ -1,30 +1,37 @@
 import {renderGuidanceValues, renderGuidanceView} from './view/GuidanceView';
-import {Universe} from './entities/Universe';
+import {Universe} from './model/entities/Universe';
 import {renderFuzzySet} from './view/FuzzySet';
+import {Vector} from './model/vector/Vector';
 
-const universe = new Universe();
-
-document.querySelector(".btn-new-universe").onclick = () => {
-    universe.generate();
-    universe.reset();
+const state = {
+    universe: null,
+    params: {
+        enemy: {
+            pos: new Vector(300, 300),
+            speed: 10,
+            angle: 0,
+            angleSpeed: -5 / 25,
+        },
+        uav: {
+            pos: new Vector(500, 500),
+            speed: 15,
+        }
+    }
 };
 
-document.querySelector(".btn-restart").onclick = () => {
-    universe.reset();
-};
+window.state = state;
 
-universe.generate();
-universe.reset();
-universe.updateSimulation(10 / 60);
-universe.updateGuidance(10 / 60);
+state.universe = new Universe({...state.params});
 
-renderGuidanceView('.crisp-guidance-view', universe.worlds.crisp);
-renderGuidanceView('.fuzzy-guidance-view', universe.worlds.fuzzy);
+renderGuidanceView('.crisp-guidance-view', state.universe.worlds.crisp);
+renderGuidanceView('.fuzzy-guidance-view', state.universe.worlds.fuzzy);
 
-renderGuidanceValues('.crisp-guidance-view', universe.worlds.crisp);
-renderGuidanceValues('.fuzzy-guidance-view', universe.worlds.fuzzy);
+renderGuidanceValues('.crisp-guidance-view', state.universe.worlds.crisp);
+renderGuidanceValues('.fuzzy-guidance-view', state.universe.worlds.fuzzy);
 
-renderFuzzySet(".fuzzy-d", universe.worlds.fuzzy.uav.fuzzy.d);
-renderFuzzySet(".fuzzy-v", universe.worlds.fuzzy.uav.fuzzy.v);
-renderFuzzySet(".fuzzy-alpha", universe.worlds.fuzzy.uav.fuzzy.alpha, [-Math.PI * 2, Math.PI * 2]);
-renderFuzzySet(".fuzzy-omega", universe.worlds.fuzzy.uav.fuzzy.omega, [-Math.PI * 2, Math.PI * 2]);
+renderFuzzySet(".fuzzy-d", state.universe.worlds.fuzzy.uav.fuzzy.d);
+renderFuzzySet(".fuzzy-v", state.universe.worlds.fuzzy.uav.fuzzy.v);
+renderFuzzySet(".fuzzy-alpha", state.universe.worlds.fuzzy.uav.fuzzy.alpha, [-Math.PI * 2, Math.PI * 2]);
+renderFuzzySet(".fuzzy-omega", state.universe.worlds.fuzzy.uav.fuzzy.omega, [-Math.PI * 2, Math.PI * 2]);
+
+state.universe.start(1);
