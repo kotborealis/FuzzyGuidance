@@ -21,8 +21,9 @@ export const renderGuidanceValues = (
     chartAlpha,
     valueAlphaInt,
     valueAlphaFloat,
-    world
+    state, type
 ) => {
+    const world = state.universe.worlds[type];
     if(
         [chartV,
             valueVInt,
@@ -67,10 +68,11 @@ export const renderGuidanceValues = (
         chartAlpha,
         valueAlphaInt,
         valueAlphaFloat,
-        world), 200);
+        state, type), 200);
 };
 
-export const renderGuidanceView = (canvasRef, world) => {
+export const renderGuidanceView = (canvasRef, state, type) => {
+    const world = state.universe.worlds[type];
     const canvas = canvasRef.current;
     if(canvas){
         canvas.width = width;
@@ -93,5 +95,5 @@ export const renderGuidanceView = (canvasRef, world) => {
 
     }
 
-    requestAnimationFrame(() => renderGuidanceView(canvasRef, world));
+    requestAnimationFrame(() => renderGuidanceView(canvasRef, state, type));
 };

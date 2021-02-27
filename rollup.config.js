@@ -24,7 +24,7 @@ export default {
         commonjs({
             namedExports: {
                 'react-dom': ['render'],
-                'react': ['useRef']
+                'react': ['useRef', 'isValidElement', 'useState', 'useCallback', 'useEffect', 'useMemo', 'createContext', 'useContext', 'createElement', 'cloneElement']
             }
         }),
         production && terser(), // minify, but only in production,

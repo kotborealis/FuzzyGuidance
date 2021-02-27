@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import {renderGuidanceValues, renderGuidanceView} from '../view/GuidanceView';
 
-export const WorldView = ({name, world}) => {
+export const WorldView = ({name, type, state}) => {
     const guidanceView = useRef(null);
     const chartV = useRef(null);
     const valueVInt = useRef(null);
@@ -16,7 +16,7 @@ export const WorldView = ({name, world}) => {
     const valueAlphaInt = useRef(null);
     const valueAlphaFloat = useRef(null);
 
-    renderGuidanceView(guidanceView, world);
+    renderGuidanceView(guidanceView, state, type);
     renderGuidanceValues(
         chartV,
         valueVInt,
@@ -30,7 +30,7 @@ export const WorldView = ({name, world}) => {
         chartAlpha,
         valueAlphaInt,
         valueAlphaFloat,
-        world
+        state, type
     );
 
     return (<div className="shadow-md p-2 flex space-x-4 flex-col">
@@ -40,45 +40,53 @@ export const WorldView = ({name, world}) => {
             <tbody>
             <tr>
                 <td>Скорость сближения (v)</td>
-                <td ref={valueVInt}/>
-                <td className="guidance-value-dot">.</td>
-                <td ref={valueVFloat}/>
+                <td>
+                    <span ref={valueVInt}/>
+                    <span className="guidance-value-dot">.</span>
+                    <span ref={valueVFloat}/>
+                </td>
             </tr>
             <tr>
-                <td colSpan="4">
+                <td colSpan="2">
                     <canvas ref={chartV}/>
                 </td>
             </tr>
             <tr>
                 <td>Расстояние (d)</td>
-                <td ref={valueDInt}/>
-                <td className="guidance-value-dot">.</td>
-                <td ref={valueDFloat}/>
+                <td>
+                    <span ref={valueDInt}/>
+                    <span className="guidance-value-dot">.</span>
+                    <span ref={valueDFloat}/>
+                </td>
             </tr>
             <tr>
-                <td colSpan="4">
+                <td colSpan="2">
                     <canvas ref={chartD}/>
                 </td>
             </tr>
             <tr>
                 <td className="guidance-value-label">Угол линии обзора (&omega;)</td>
-                <td ref={valueOmegaInt}/>
-                <td className="guidance-value-dot">.</td>
-                <td ref={valueOmegaFloat}/>
+                <td>
+                    <span ref={valueOmegaInt}/>
+                    <span className="guidance-value-dot">.</span>
+                    <span ref={valueOmegaFloat}/>
+                </td>
             </tr>
             <tr>
-                <td colSpan="4">
+                <td colSpan="2">
                     <canvas ref={chartOmega}/>
                 </td>
             </tr>
             <tr>
                 <td className="guidance-value-label">Угловая скорость (&alpha;)</td>
-                <td ref={valueAlphaInt}/>
-                <td className="guidance-value-dot">.</td>
-                <td ref={valueAlphaFloat}/>
+                <td>
+                    <span ref={valueAlphaInt}/>
+                    <span className="guidance-value-dot">.</span>
+                    <span ref={valueAlphaFloat}/>
+                </td>
             </tr>
             <tr>
-                <td colSpan="4">
+                <td colSpan="2">
                     <canvas ref={chartAlpha}/>
                 </td>
             </tr>

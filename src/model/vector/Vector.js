@@ -17,9 +17,19 @@ export class Vector {
 
     /**
      *
+     * @param x
+     * @param y
+     * @returns {Vector}
+     */
+    static fromObject({x, y}) {
+        return new Vector(x * 1, y * 1);
+    }
+
+    /**
+     *
      * @returns {Number[]}
      */
-    coords(){
+    coords() {
         return [this.x, this.y];
     }
 
