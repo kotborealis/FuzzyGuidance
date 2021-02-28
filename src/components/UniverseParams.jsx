@@ -38,6 +38,7 @@ export const UniverseParams = ({state}) => {
                             <label>y</label>
                             <input
                                 type="number" step="0.01"
+                                name="enemy.pos.y"
                                 defaultValue={enemy.pos.y}
                                 ref={register}
                             />
