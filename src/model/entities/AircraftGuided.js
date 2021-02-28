@@ -40,6 +40,7 @@ export class AircraftGuided extends Aircraft {
     }
 
     trace = {
+        size: 0,
         angle_speed: [], // alpha
         approach_velocity: [], // v
         distance: [], // d,
@@ -88,6 +89,7 @@ export class AircraftGuided extends Aircraft {
         this.angleSpeed = alpha;
         this.params = {d, v, omega, alpha};
 
+        this.trace.size++;
         this.trace.angle_speed.push(alpha);
         this.trace.approach_velocity.push(v);
         this.trace.distance.push(d);

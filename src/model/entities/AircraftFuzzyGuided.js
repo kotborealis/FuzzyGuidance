@@ -98,6 +98,7 @@ export class AircraftFuzzyGuided extends AircraftGuided {
         this.angleSpeed = alpha;
         this.params = {d, v, omega, alpha};
 
+        this.trace.size++;
         this.trace.angle_speed.push(alpha);
         this.trace.approach_velocity.push(v);
         this.trace.distance.push(d);

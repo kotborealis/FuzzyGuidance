@@ -19,6 +19,28 @@ export const UniverseParams = ({state}) => {
         state.universe.start(1 / 10);
     };
 
+    const handleSave = () => {
+        const trace_uav_crisp = state.universe.worlds.fuzzy.uav.trace;
+        const trace_uav_fuzzy = state.universe.worlds.fuzzy.uav.trace;
+
+        const handle = (trace, type, hash) => {
+            let buffer = `angle_speed,approach_velocity,distance,sightline_angle`;
+            for(let i = 0; i < trace.size; i++)
+                buffer +=
+                    `\n${trace.angle_speed[i]},${trace.approach_velocity[i]},${trace.distance[i]},${trace.sightline_angle[i]}`;
+
+            const file = new Blob([buffer], {type: 'text/csv'});
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(file);
+            a.download = `${hash}_uav_${type}.csv`;
+            a.click();
+            URL.revokeObjectURL(a.href);
+        };
+
+        handle(trace_uav_crisp, 'crisp', Date.now());
+        handle(trace_uav_fuzzy, 'fuzzy', Date.now());
+    };
+
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <h1 className="text-2xl font-semibold">Параметры моделирования</h1>
@@ -105,6 +127,8 @@ export const UniverseParams = ({state}) => {
                 </div>
             </div>
             <input type="submit" value="Задать параметры" className="w-full"/>
+            <input onClick={handleSave}
+                   type="button" value="Сохранить результаты моделирования (CSV)" className="w-full"/>
         </form>
     );
 };
