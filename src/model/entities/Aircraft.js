@@ -29,7 +29,7 @@ export class Aircraft {
         this.position = position;
         this.speed = speed;
         this.angle = angle;
-        this.angleSpeed = angleSpeed;
+        this.angleAcceleration = angleSpeed;
     }
 
     /**
@@ -50,8 +50,8 @@ export class Aircraft {
     update(delta = 1) {
         this.trajectory.push(this.position);
 
-        this.angleSpeed += this.angleAcceleration * delta;
-        this.angle += this.angleSpeed * delta;
+        this.angle += this.angleAcceleration * delta;
+        //this.angle += this.angleSpeed * delta;
         const velocity = this.getVelocity();
         this.position = this.position.add(velocity.multiplyScalar(delta));
     }
