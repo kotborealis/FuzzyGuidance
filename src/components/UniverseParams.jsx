@@ -24,7 +24,7 @@ export const UniverseParams = ({state}) => {
         const trace_uav_fuzzy = state.universe.worlds.fuzzy.uav.trace;
 
         const handle = (trace, type, hash) => {
-            let buffer = `angle_speed,approach_velocity,distance,sightline_angle`;
+            let buffer = `angle_acceleration,approach_velocity,distance,sightline_angle`;
             for(let i = 0; i < trace.size; i++)
                 buffer +=
                     `\n${trace.angle_speed[i]},${trace.approach_velocity[i]},${trace.distance[i]},${trace.sightline_angle[i]}`;
