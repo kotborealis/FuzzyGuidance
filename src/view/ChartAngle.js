@@ -26,7 +26,7 @@ export const ChartAngle = (canvas, data, color = "#4c0000") => {
     ctx.strokeStyle = color;
     ctx.lineWidth = 3;
     for(let i = 1; i < data.length; i++){
-        ctx.lineTo(i * canvas.width / 100, -data[i] * k + canvas.height / 2);
+        ctx.lineTo(i * canvas.width / data.length, -data[i] * k + canvas.height / 2);
     }
     ctx.stroke();
 };
