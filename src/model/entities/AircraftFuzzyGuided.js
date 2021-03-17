@@ -103,5 +103,9 @@ export class AircraftFuzzyGuided extends AircraftGuided {
         this.trace.approach_velocity.push(v);
         this.trace.distance.push(d);
         this.trace.sightline_angle.push(omega);
+        this.trace.enemy_x.push(this.target.position.x);
+        this.trace.enemy_y.push(this.target.position.y);
+        this.trace.uav_x.push(this.position.x);
+        this.trace.uav_y.push(this.position.y);
     }
 }

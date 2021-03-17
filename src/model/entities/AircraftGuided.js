@@ -44,7 +44,11 @@ export class AircraftGuided extends Aircraft {
         angle_speed: [], // alpha
         approach_velocity: [], // v
         distance: [], // d,
-        sightline_angle: [] // omega
+        sightline_angle: [], // omega
+        enemy_x: [], // coords
+        enemy_y: [],
+        uav_x: [], // coords
+        uav_y: []
     }
 
     /** @type {Aircraft} **/
@@ -94,5 +98,9 @@ export class AircraftGuided extends Aircraft {
         this.trace.approach_velocity.push(v);
         this.trace.distance.push(d);
         this.trace.sightline_angle.push(omega);
+        this.trace.enemy_x.push(this.target.position.x);
+        this.trace.enemy_y.push(this.target.position.y);
+        this.trace.uav_x.push(this.position.x);
+        this.trace.uav_y.push(this.position.y);
     }
 }

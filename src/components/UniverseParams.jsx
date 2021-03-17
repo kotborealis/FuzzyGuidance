@@ -24,10 +24,17 @@ export const UniverseParams = ({state}) => {
         const trace_uav_fuzzy = state.universe.worlds.fuzzy.uav.trace;
 
         const handle = (trace, type, hash) => {
-            let buffer = `angle_acceleration,approach_velocity,distance,sightline_angle`;
+            let buffer = `enemy_x,enemy_y,uav_x,uav_y,angle_acceleration,approach_velocity,distance,sightline_angle`;
             for(let i = 0; i < trace.size; i++)
-                buffer +=
-                    `\n${trace.angle_speed[i]},${trace.approach_velocity[i]},${trace.distance[i]},${trace.sightline_angle[i]}`;
+                buffer += `\n` +
+                          `${trace.enemy_x[i]},` +
+                          `${trace.enemy_y[i]},` +
+                          `${trace.uav_x[i]},` +
+                          `${trace.uav_y[i]},` +
+                          `${trace.angle_speed[i]},` +
+                          `${trace.approach_velocity[i]},` +
+                          `${trace.distance[i]},` +
+                          `${trace.sightline_angle[i]}`;
 
             const file = new Blob([buffer], {type: 'text/csv'});
             const a = document.createElement('a');
