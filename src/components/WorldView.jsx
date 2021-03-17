@@ -65,7 +65,7 @@ export const WorldView = ({name, type, state}) => {
                 </td>
             </tr>
             <tr>
-                <td className="guidance-value-label">Угол линии обзора (&omega;)</td>
+                <td className="guidance-value-label">Угол линии обзора (&alpha;)</td>
                 <td>
                     <span ref={valueOmegaInt}/>
                     <span className="guidance-value-dot">.</span>
@@ -78,7 +78,7 @@ export const WorldView = ({name, type, state}) => {
                 </td>
             </tr>
             <tr>
-                <td className="guidance-value-label">Угловая скорость (&alpha;)</td>
+                <td className="guidance-value-label">Угловая скорость (&omega;)</td>
                 <td>
                     <span ref={valueAlphaInt}/>
                     <span className="guidance-value-dot">.</span>
