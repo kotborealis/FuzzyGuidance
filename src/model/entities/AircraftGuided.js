@@ -97,7 +97,7 @@ export class AircraftGuided extends Aircraft {
         this.trace.angle_speed.push(alpha);
         this.trace.approach_velocity.push(v);
         this.trace.distance.push(d);
-        this.trace.sightline_angle.push(omega);
+        this.trace.sightline_angle.push(this.sightLines[this.sightLines.length - 1].angle());
         this.trace.enemy_x.push(this.target.position.x);
         this.trace.enemy_y.push(this.target.position.y);
         this.trace.uav_x.push(this.position.x);
