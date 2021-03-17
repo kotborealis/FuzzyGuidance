@@ -16,6 +16,9 @@ export class Aircraft {
     /** @type {Number} **/
     angleSpeed = 0;
 
+    /** @type {Number} **/
+    angleAcceleration = 0;
+
     /**
      *
      * @param {Vector} position
@@ -47,6 +50,7 @@ export class Aircraft {
     update(delta = 1) {
         this.trajectory.push(this.position);
 
+        this.angleSpeed += this.angleAcceleration * delta;
         this.angle += this.angleSpeed * delta;
         const velocity = this.getVelocity();
         this.position = this.position.add(velocity.multiplyScalar(delta));

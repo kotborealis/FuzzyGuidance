@@ -95,7 +95,7 @@ export class AircraftFuzzyGuided extends AircraftGuided {
         this.fuzzy.omega.fuzzyfy(omega);
         let alpha = this.fuzzy.alpha.defuzzify();
         alpha = isNaN(alpha) ? 0 : alpha;
-        this.angleSpeed = alpha;
+        this.angleAcceleration = alpha;
         this.params = {d, v, omega, alpha};
 
         this.trace.size++;
