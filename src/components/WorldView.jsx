@@ -39,7 +39,7 @@ export const WorldView = ({name, type, state}) => {
         <table>
             <tbody>
             <tr>
-                <td>Скорость сближения (v)</td>
+                <td>Скорость сближения</td>
                 <td>
                     <span ref={valueVInt}/>
                     <span className="guidance-value-dot">.</span>
@@ -52,7 +52,7 @@ export const WorldView = ({name, type, state}) => {
                 </td>
             </tr>
             <tr>
-                <td>Расстояние (d)</td>
+                <td>Расстояние</td>
                 <td>
                     <span ref={valueDInt}/>
                     <span className="guidance-value-dot">.</span>
@@ -65,7 +65,7 @@ export const WorldView = ({name, type, state}) => {
                 </td>
             </tr>
             <tr>
-                <td className="guidance-value-label">Пеленг (&alpha;)</td>
+                <td className="guidance-value-label">Приращение пеленга</td>
                 <td>
                     <span ref={valueOmegaInt}/>
                     <span className="guidance-value-dot">.</span>
@@ -78,7 +78,7 @@ export const WorldView = ({name, type, state}) => {
                 </td>
             </tr>
             <tr>
-                <td className="guidance-value-label">Угловое ускорение (&omega;)</td>
+                <td className="guidance-value-label">Угловая скорость</td>
                 <td>
                     <span ref={valueAlphaInt}/>
                     <span className="guidance-value-dot">.</span>

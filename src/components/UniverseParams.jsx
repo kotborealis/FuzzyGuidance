@@ -24,7 +24,7 @@ export const UniverseParams = ({state}) => {
         const trace_uav_fuzzy = state.universe.worlds.fuzzy.uav.trace;
 
         const handle = (trace, type, hash) => {
-            let buffer = `enemy_x,enemy_y,uav_x,uav_y,angle_acceleration,approach_velocity,distance,sightline_angle`;
+            let buffer = `enemy_x,enemy_y,uav_x,uav_y,angle_speed,approach_velocity,distance,sightline_angle`;
             for(let i = 0; i < trace.size; i++)
                 buffer += `\n` +
                           `${trace.enemy_x[i]},` +
@@ -55,7 +55,7 @@ export const UniverseParams = ({state}) => {
                 <div>
                     <h1 className="text-xl font-semibold">Цель наведения</h1>
                     <div>
-                        <label>Координаты</label>
+                        <label>Исходные координаты</label>
                         <div className="grid grid-cols-2">
                             <label>x</label>
                             <input
@@ -74,7 +74,7 @@ export const UniverseParams = ({state}) => {
                         </div>
                     </div>
                     <div className="grid grid-cols-2">
-                        <label>Скорость</label>
+                        <label>Исходная скорость</label>
                         <input
                             type="number" step="0.01"
                             name="enemy.speed"
@@ -83,7 +83,7 @@ export const UniverseParams = ({state}) => {
                         />
                     </div>
                     <div className="grid grid-cols-2">
-                        <label>Угол</label>
+                        <label>Исходный угол места</label>
                         <input
                             type="number" step="0.01"
                             name="enemy.angle"
@@ -92,7 +92,7 @@ export const UniverseParams = ({state}) => {
                         />
                     </div>
                     <div className="grid grid-cols-2">
-                        <label>Угловая скорость</label>
+                        <label>Исходная угловая скорость</label>
                         <input
                             type="number" step="0.01"
                             name="enemy.angleSpeed"
@@ -104,7 +104,7 @@ export const UniverseParams = ({state}) => {
                 <div>
                     <h1 className="text-xl font-semibold">Объект управления</h1>
                     <div>
-                        <label>Координаты</label>
+                        <label>Исходные координаты</label>
                         <div className="grid grid-cols-2">
                             <label>x</label>
                             <input
@@ -123,7 +123,7 @@ export const UniverseParams = ({state}) => {
                         </div>
                     </div>
                     <div className="grid grid-cols-2">
-                        <label>Скорость</label>
+                        <label>Исходная скорость</label>
                         <input
                             type="number" step="0.01"
                             name="uav.speed"
@@ -133,7 +133,7 @@ export const UniverseParams = ({state}) => {
                     </div>
                 </div>
             </div>
-            <input type="submit" value="Задать параметры" className="w-full"/>
+            <input type="submit" value="Задать исходные параметры" className="w-full"/>
             <input onClick={handleSave}
                    type="button" value="Сохранить результаты моделирования (CSV)" className="w-full"/>
         </form>
